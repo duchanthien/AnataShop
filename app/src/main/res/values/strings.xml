@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Anata</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="DangNhapActivityLabel">Đăng nhập/Đăng ký</string>
+    <string name="facebook_app_id">331481703858471</string>
+    <string name="google_plus_id">688290473907-cm7jmuho8o1ctdo1tekoj9jk6kv6nrn2.apps.googleusercontent.com </string>
+</resources>
