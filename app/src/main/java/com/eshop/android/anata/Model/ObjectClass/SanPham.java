@@ -5,7 +5,15 @@ package com.eshop.android.anata.Model.ObjectClass;
  */
 public class SanPham {
     int MASP, GIA, SOLUONG, MALOAISP, MATH, MANV, LUOTMUA;
-    String HINHLON, HINHNHO, THONGTIN;
+    String TENSP,HINHLON, HINHNHO, THONGTIN;
+
+    public String getTENSP() {
+        return TENSP;
+    }
+
+    public void setTENSP(String TENSP) {
+        this.TENSP = TENSP;
+    }
 
     public int getMASP() {
         return MASP;

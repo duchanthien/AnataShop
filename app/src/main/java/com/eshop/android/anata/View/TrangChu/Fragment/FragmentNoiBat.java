@@ -36,7 +36,7 @@ public class FragmentNoiBat extends Fragment{
         }
 
         //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
 
         recyclerView.setLayoutManager(layoutManager);
         adapterNoiBat = new AdapterNoiBat(getActivity(),mData);

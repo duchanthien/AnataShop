@@ -25,10 +25,11 @@
             android:id="@+id/tabDangNhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="fixed"
-            app:tabTextAppearance="@style/capfalse"
-            app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/grey">
+            android:background="@color/white"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/cardview_dark_background">
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
