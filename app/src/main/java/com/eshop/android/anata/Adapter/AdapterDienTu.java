@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eshop.android.anata.Model.ObjectClass.DienTu;
 import com.eshop.android.anata.R;
@@ -30,12 +31,16 @@ public class AdapterDienTu extends RecyclerView.Adapter<AdapterDienTu.ViewHolder
     public class ViewHolderDienTu extends RecyclerView.ViewHolder {
         ImageView imgHinhKhuyenMaiDienTu;
         RecyclerView recyclerViewThuongHieuLon, recyclerViewTopSanPham;
+        TextView txtTenSanPhamNoiBat, txtTenTopSanPhamNoiBat;
 
         public ViewHolderDienTu(View itemView) {
             super(itemView);
+
             recyclerViewThuongHieuLon = (RecyclerView) itemView.findViewById(R.id.recylerThuonghieulon);
             recyclerViewTopSanPham = (RecyclerView) itemView.findViewById(R.id.recylerTopDienTMayTB);
             imgHinhKhuyenMaiDienTu = (ImageView) itemView.findViewById(R.id.imgKhuyenMaiDienTu);
+            txtTenSanPhamNoiBat = (TextView) itemView.findViewById(R.id.txtTenSanPhamNoiBat);
+            txtTenTopSanPhamNoiBat = (TextView) itemView.findViewById(R.id.txtTenTopSanPhamNoiBat);
 
         }
     }
@@ -55,8 +60,11 @@ public class AdapterDienTu extends RecyclerView.Adapter<AdapterDienTu.ViewHolder
     public void onBindViewHolder(ViewHolderDienTu holder, int position) {
         DienTu dienTu = dienTuList.get(position);
 
+        holder.txtTenSanPhamNoiBat.setText(dienTu.getTennoibat().toString());
+        holder.txtTenTopSanPhamNoiBat.setText(dienTu.getTentopnoibat().toString());
+
         // Hiển thị danh sách Thương hiệu lớn ở recyclerview thương hiệu lớn
-        AdapterThuongHieuLon adapterThuongHieuLon = new AdapterThuongHieuLon(context, dienTu.getThuongHieus());
+        AdapterThuongHieuLon adapterThuongHieuLon = new AdapterThuongHieuLon(context, dienTu.getThuongHieus(), dienTu.isThuonghieu());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false);
 
@@ -64,14 +72,14 @@ public class AdapterDienTu extends RecyclerView.Adapter<AdapterDienTu.ViewHolder
         holder.recyclerViewThuongHieuLon.setAdapter(adapterThuongHieuLon);
         adapterThuongHieuLon.notifyDataSetChanged();
 
-        // Hiển thị danh sách Thương hiệu lớn ở reyclerview thương hiệu lớn
-        AdapterTopDienThoaiDienTu adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(context,dienTu.getSanPhams());
+        // Hiển thị danh sách top sản phẩm ở reyclerview Top sản phẩm
+        AdapterTopDienThoaiDienTu adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(context,R.layout.custom_layout_topdienthoaimaytinhbang, dienTu.getSanPhams());
 
-        RecyclerView.LayoutManager layoutManager1 = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
         holder.recyclerViewTopSanPham.setLayoutManager(layoutManager1);
         holder.recyclerViewTopSanPham.setAdapter(adapterTopDienThoaiDienTu);
-        adapterTopDienThoaiDienTu .notifyDataSetChanged();
+        adapterTopDienThoaiDienTu.notifyDataSetChanged();
 
     }
 

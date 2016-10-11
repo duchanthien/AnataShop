@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/cv_mtb"
+    android:gravity="center">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,7 +17,7 @@
             android:layout_gravity="center" />
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
@@ -29,13 +32,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Tên sản phẩm " />
+                android:maxLength="20"
+                android:text="Tên sản phẩm "
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/txtGiaDienTu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Giá tiền"
+                android:textAlignment="center"
                 android:textColor="@color/red" />
 
             <TextView

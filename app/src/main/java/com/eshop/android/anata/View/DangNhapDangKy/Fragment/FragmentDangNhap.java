@@ -125,7 +125,7 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getContext());
-            mProgressDialog.setMessage("");
+            mProgressDialog.setMessage("Please wait...");
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.show();
         }

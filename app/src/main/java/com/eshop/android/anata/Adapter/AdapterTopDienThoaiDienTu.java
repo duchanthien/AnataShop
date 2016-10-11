@@ -24,10 +24,12 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
 
     Context context;
     List<SanPham> sanPhamList;
+    int layout;
 
-    public AdapterTopDienThoaiDienTu(Context context, List<SanPham> sanPhamList) {
+    public AdapterTopDienThoaiDienTu(Context context, int layout, List<SanPham> sanPhamList) {
         this.context = context;
         this.sanPhamList = sanPhamList;
+        this.layout = layout;
     }
 
     public class ViewHolderTopDienThoai extends RecyclerView.ViewHolder {
@@ -49,7 +51,7 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
     @Override
     public ViewHolderTopDienThoai onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_layout_topdienthoaimaytinhbang, parent, false);
+        View view = inflater.inflate(layout, parent, false);
 
         ViewHolderTopDienThoai viewHolderTopDienThoai = new ViewHolderTopDienThoai(view);
         return viewHolderTopDienThoai;

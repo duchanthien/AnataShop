@@ -11,6 +11,7 @@ public class ThuongHieu {
         return MATH;
     }
 
+
     public void setMATH(int MATH) {
         this.MATH = MATH;
     }
