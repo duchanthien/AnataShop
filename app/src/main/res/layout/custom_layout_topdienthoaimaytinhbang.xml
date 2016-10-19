@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:id="@+id/cv_mtb"
+    android:id="@+id/cardViewTopDT"
     android:gravity="center">
 
     <FrameLayout

@@ -43,7 +43,7 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.layout_sanphamtheodanhmuc);
 
         recyclerView = (RecyclerView) findViewById(R.id.rcv_sanphamtheodanhmuc);
-        btnThayDoiRecyclerView = (Button) findViewById(R.id.btnDoiRecycler);
+        btnThayDoiRecyclerView = (Button) findViewById(R.id.btnThayDoiRecyclerView);
         toolbar = (Toolbar) findViewById(R.id.toolbarDanhMuc);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
@@ -72,7 +72,7 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
         }
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterTopDienThoaiDienTu);
-        recyclerView.addOnScrollListener(new LoadMoreScroll(layoutManager, SanPhamTheoDanhMucActivity.this));
+        recyclerView.addOnScrollListener(new LoadMoreScroll(layoutManager, this));
         adapterTopDienThoaiDienTu.notifyDataSetChanged();
     }
 
@@ -85,10 +85,10 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btnDoiRecycler:
+            case R.id.btnThayDoiRecyclerView:
                 dangGrid = !dangGrid;
                 sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, kiemtra);
-                break;
+                ;break;
         }
     }
 

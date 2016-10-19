@@ -1,11 +1,22 @@
 package com.eshop.android.anata.Model.ObjectClass;
 
+import java.util.List;
+
 /**
  * Created by Han on 13/09/2016.
  */
 public class SanPham {
     int MASP, GIA, SOLUONG, MALOAISP, MATH, MANV, LUOTMUA;
-    String TENSP,HINHLON, HINHNHO, THONGTIN;
+    String TENSP, HINHLON, HINHNHO, THONGTIN;
+    List<ChiTietSanPham> chiTietSanPhamList;
+
+    public List<ChiTietSanPham> getChiTietSanPhamList() {
+        return chiTietSanPhamList;
+    }
+
+    public void setChiTietSanPhamList(List<ChiTietSanPham> chiTietSanPhamList) {
+        this.chiTietSanPhamList = chiTietSanPhamList;
+    }
 
     public String getTENSP() {
         return TENSP;

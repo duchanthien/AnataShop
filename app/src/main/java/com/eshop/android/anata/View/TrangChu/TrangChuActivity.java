@@ -53,6 +53,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
     // 192.168.1.102
     public static String SERVER_NAME = "http://192.168.80.1:8080/webanata/loaisanpham.php";
+    public static String SERVER = "http://192.168.80.1:8080/webanata";
 
     Toolbar toolbar;
     TabLayout mtabLayout;

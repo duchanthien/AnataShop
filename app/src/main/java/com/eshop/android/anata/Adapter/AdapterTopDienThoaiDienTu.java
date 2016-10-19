@@ -1,6 +1,9 @@
 package com.eshop.android.anata.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.R;
+import com.eshop.android.anata.View.ChiTietSanPham.ChiTietSanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -36,6 +40,7 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
         ImageView imgHinhSP;
         TextView txtTenSP, txtGiaTien, txtGiamGia;
         ProgressBar progressBarTopDienThoai;
+        CardView cardView;
 
         public ViewHolderTopDienThoai(View itemView) {
             super(itemView);
@@ -44,6 +49,8 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
             txtGiaTien = (TextView) itemView.findViewById(R.id.txtGiaDienTu);
             txtGiamGia = (TextView) itemView.findViewById(R.id.txtDienTuGiamGia);
             progressBarTopDienThoai = (ProgressBar) itemView.findViewById(R.id.progressTopDienThoai);
+            cardView = (CardView) itemView.findViewById(R.id.cardViewTopDT);
+
 
         }
     }
@@ -66,7 +73,16 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGIA()).toString();
         holder.txtGiaTien.setText(gia + " VND ");
+        holder.cardView.setTag(sanPham.getMASP());
 
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iChitietSanpham = new Intent(context, ChiTietSanPhamActivity.class);
+                iChitietSanpham.putExtra("masp", (int) v.getTag());
+                context.startActivity(iChitietSanpham);
+            }
+        });
     }
 
     @Override

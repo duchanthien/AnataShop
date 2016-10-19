@@ -49,11 +49,6 @@ public class PresenterLogicSanPhamTheoDanhMuc implements IPresenterSanPhamTheoDa
             sanPhamList = modelSanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, "LayDanhSachSanPhamTheoMaloaiDanhMuc", "DANHSACHSANPHAM", limit);
         }
 
-        if (sanPhamList.size() > 0) {
-            viewHienThiSanPhamTheoDanhMuc.HienThiDanhSachSanPham(sanPhamList);
-        } else {
-            viewHienThiSanPhamTheoDanhMuc.LoiHienThiDanhSachSanPham();
-        }
         if(sanPhamList.size() != 0){
             progressBar.setVisibility(View.GONE);
         }

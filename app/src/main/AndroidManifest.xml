@@ -34,7 +34,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.TrangChu.TrangChuActivity" />
         </activity>
-        <activity android:name=".View.TrangDanhMucSanPham.SanPhamTheoDanhMucActivity"></activity>
+        <activity android:name=".View.TrangDanhMucSanPham.SanPhamTheoDanhMucActivity" />
+        <activity android:name=".View.ChiTietSanPham.ChiTietSanPhamActivity"></activity>
     </application>
 
 </manifest>
