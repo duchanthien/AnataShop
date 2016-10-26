@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.AppBarLayout.OnOffsetChangedListener;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,16 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.eshop.android.anata.Adapter.ExpandAdapter;
 import com.eshop.android.anata.Adapter.ViewPagerAdapter;
 import com.eshop.android.anata.Model.DangNhap_DangKy.ModelDangNhap;
 import com.eshop.android.anata.Model.ObjectClass.LoaiSanPham;
+import com.eshop.android.anata.Presenter.ChiTietSanPham.PresenterLogicChiTietSanPham;
 import com.eshop.android.anata.Presenter.TrangChu.XuLyMenu.PresenterLogicXuLyMenu;
 import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.DangNhapDangKy.DangNhapActivity;
+import com.eshop.android.anata.View.GioHang.GioHangActivity;
+import com.eshop.android.anata.View.MongMuon.MongMuonActivity;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentChuongTrinhKhuyenMai;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentDienTu;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentLamDep;
@@ -72,6 +78,8 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     CollapsingToolbarLayout collapsingToolbarLayout;
     AppBarLayout appBarLayout;
     LinearLayout linearLayout;
+    TextView txtGioHang;
+    boolean onPause = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +175,41 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
             ItemDangxuat.setVisible(true);
         }
 
+
+        MenuItem iGioHang = menu.findItem(R.id.itGiohang);
+        View giaoDienCustomGioHang = MenuItemCompat.getActionView(iGioHang);
+        txtGioHang = (TextView) giaoDienCustomGioHang.findViewById(R.id.txtSoluongSanPhamGioHang);
+
+        PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
+        txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+
+        giaoDienCustomGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(TrangChuActivity.this,"Check Click",Toast.LENGTH_SHORT).show();
+                Intent iGioHang = new Intent(TrangChuActivity.this, GioHangActivity.class);
+                startActivity(iGioHang);
+            }
+        });
+
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (onPause) {
+            PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
+            txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        onPause = true;
     }
 
     @Override
@@ -195,12 +237,16 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                     this.menu.clear();
                     this.onCreateOptionsMenu(this.menu);
                 }
-                if (!modelDangNhap.LayCachedDangNhap(TrangChuActivity.this).equals("")){
-                    modelDangNhap.CapNhatCachedDangNhap(TrangChuActivity.this,"");
+                if (!modelDangNhap.LayCachedDangNhap(TrangChuActivity.this).equals("")) {
+                    modelDangNhap.CapNhatCachedDangNhap(TrangChuActivity.this, "");
                     this.menu.clear();
                     this.onCreateOptionsMenu(this.menu);
                 }
-
+                break;
+            case R.id.itMongMuon:
+                Intent iMongMuon = new Intent(TrangChuActivity.this, MongMuonActivity.class);
+                startActivity(iMongMuon);
+                break;
 
         }
 

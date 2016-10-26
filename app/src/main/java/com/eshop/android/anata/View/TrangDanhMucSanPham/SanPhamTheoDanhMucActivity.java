@@ -46,7 +46,6 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
         btnThayDoiRecyclerView = (Button) findViewById(R.id.btnThayDoiRecyclerView);
         toolbar = (Toolbar) findViewById(R.id.toolbarDanhMuc);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
         Intent intent = getIntent();
         masp = intent.getIntExtra("MALOAITH", 0);
         String tensp = intent.getStringExtra("TENLOAITH");
@@ -56,8 +55,8 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
         sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, kiemtra);
 
         btnThayDoiRecyclerView.setOnClickListener(this);
-        toolbar.setTitle(tensp);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -88,8 +87,17 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
             case R.id.btnThayDoiRecyclerView:
                 dangGrid = !dangGrid;
                 sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, kiemtra);
-                ;break;
+                ;
+                break;
         }
+    }
+
+
+    @Override
+    public void LoadMore(int tongitem) {
+        List<SanPham> sanPhamsLoadMore = sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoaiLoadMore(masp, kiemtra, tongitem, progressBar);
+        sanPhams.addAll(sanPhamsLoadMore);
+        adapterTopDienThoaiDienTu.notifyDataSetChanged();
     }
 
     @Override
@@ -98,10 +106,4 @@ public class SanPhamTheoDanhMucActivity extends AppCompatActivity implements Vie
         return true;
     }
 
-    @Override
-    public void LoadMore(int tongitem) {
-        List<SanPham> sanPhamsLoadMore = sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoaiLoadMore(masp, kiemtra, tongitem, progressBar);
-        sanPhams.addAll(sanPhamsLoadMore);
-        adapterTopDienThoaiDienTu.notifyDataSetChanged();
-    }
 }

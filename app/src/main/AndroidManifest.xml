@@ -3,6 +3,7 @@
     package="com.eshop.android.anata">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -34,8 +35,62 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.TrangChu.TrangChuActivity" />
         </activity>
-        <activity android:name=".View.TrangDanhMucSanPham.SanPhamTheoDanhMucActivity" />
-        <activity android:name=".View.ChiTietSanPham.ChiTietSanPhamActivity"></activity>
+        <activity
+            android:name=".View.TrangDanhMucSanPham.SanPhamTheoDanhMucActivity"
+            android:label="@string/danhmuc_activity_name"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
+        <activity
+            android:name=".View.ChiTietSanPham.ChiTietSanPhamActivity"
+            android:label="@string/chitietsanpham_activity_name"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
+        <activity
+            android:name=".View.DanhGia.ThemDanhGiaActivity"
+            android:parentActivityName=".View.ChiTietSanPham.ChiTietSanPhamActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.ChiTietSanPham.ChiTietSanPhamActivity" />
+        </activity>
+        <activity
+            android:name=".View.DanhGia.DanhSachDanhGiaActivity"
+            android:parentActivityName=".View.ChiTietSanPham.ChiTietSanPhamActivity"
+            android:label="@string/danhgia_activity_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.ChiTietSanPham.ChiTietSanPhamActivity" />
+        </activity>
+        <activity
+            android:name=".View.GioHang.GioHangActivity"
+            android:label="@string/giohang_activity_name"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
+        <activity
+            android:name=".View.MongMuon.MongMuonActivity"
+            android:label="@string/mongmuon_activity_name"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
+        <activity
+            android:name=".View.ThanhToan.ThanhToanActivity"
+            android:label="@string/thanhtoan_activity_name"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
     </application>
 
 </manifest>

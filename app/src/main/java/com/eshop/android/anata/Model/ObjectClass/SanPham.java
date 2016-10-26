@@ -6,9 +6,27 @@ import java.util.List;
  * Created by Han on 13/09/2016.
  */
 public class SanPham {
-    int MASP, GIA, SOLUONG, MALOAISP, MATH, MANV, LUOTMUA;
-    String TENSP, HINHLON, HINHNHO, THONGTIN;
+    int MASP, GIA, SOLUONG, MALOAISP, MATH, MANV, LUOTMUA,SOLUONGTONKHO;
+    String TENSP, HINHLON, HINHNHO, THONGTIN,TENNV;
     List<ChiTietSanPham> chiTietSanPhamList;
+
+    byte[] hinhgiohang;
+
+    public byte[] getHinhgiohang() {
+        return hinhgiohang;
+    }
+
+    public int getSOLUONGTONKHO() {
+        return SOLUONGTONKHO;
+    }
+
+    public void setSOLUONGTONKHO(int SOLUONGTONKHO) {
+        this.SOLUONGTONKHO = SOLUONGTONKHO;
+    }
+
+    public void setHinhgiohang(byte[] hinhgiohang) {
+        this.hinhgiohang = hinhgiohang;
+    }
 
     public List<ChiTietSanPham> getChiTietSanPhamList() {
         return chiTietSanPhamList;
@@ -16,6 +34,14 @@ public class SanPham {
 
     public void setChiTietSanPhamList(List<ChiTietSanPham> chiTietSanPhamList) {
         this.chiTietSanPhamList = chiTietSanPhamList;
+    }
+
+    public String getTENNV() {
+        return TENNV;
+    }
+
+    public void setTENNV(String TENNV) {
+        this.TENNV = TENNV;
     }
 
     public String getTENSP() {
