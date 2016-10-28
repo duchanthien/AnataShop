@@ -88,7 +88,7 @@ public class AdapterThuongHieuLon extends RecyclerView.Adapter<AdapterThuongHieu
 
                 Intent iSanPhamTheoDanhMuc = new Intent(context, SanPhamTheoDanhMucActivity.class);
                 iSanPhamTheoDanhMuc.putExtra("MALOAITH",thuongHieu.getMATH());
-                iSanPhamTheoDanhMuc.putExtra("TENLOAITH",thuongHieu.getMATH());
+                iSanPhamTheoDanhMuc.putExtra("TENLOAITH",thuongHieu.getTENTH());
                 iSanPhamTheoDanhMuc.putExtra("KIEMTRA",kiemtra);
                 context.startActivity(iSanPhamTheoDanhMuc);
                 // Log.d("Click", thuongHieu.getMATH() + " - " + thuongHieu.getTENTH());

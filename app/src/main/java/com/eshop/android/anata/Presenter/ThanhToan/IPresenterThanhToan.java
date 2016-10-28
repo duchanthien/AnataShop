@@ -10,5 +10,5 @@ import com.eshop.android.anata.Model.ObjectClass.HoaDon;
 
 public interface IPresenterThanhToan {
     void ThemHoaDon(HoaDon hoaDon);
-    void LayDanhSachSanPhamTrongGioHang(Context context);
+    void LayDanhSachSanPhamTrongGioHang();
 }

@@ -66,7 +66,7 @@ public class ModelGioHang {
             sanPhamList.add(sanPham);
             cursor.moveToNext();
         }
-
+        sqLiteDatabase.close();
         return sanPhamList;
 
     }
@@ -89,5 +89,6 @@ public class ModelGioHang {
         } else {
             return false;
         }
+
     }
 }

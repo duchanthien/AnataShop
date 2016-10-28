@@ -2,6 +2,7 @@ package com.eshop.android.anata.View.ChiTietSanPham;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.eshop.android.anata.Adapter.AdapterDanhGia;
 import com.eshop.android.anata.Adapter.AdapterViewPagerSlider;
 import com.eshop.android.anata.Model.GioHang_MongMuon.ModelMongMuon;
+import com.eshop.android.anata.Model.ObjectClass.ChiTietKhuyenMai;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietSanPham;
 import com.eshop.android.anata.Model.ObjectClass.DanhGia;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
@@ -40,6 +43,7 @@ import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.DanhGia.DanhSachDanhGiaActivity;
 import com.eshop.android.anata.View.DanhGia.ThemDanhGiaActivity;
 import com.eshop.android.anata.View.GioHang.GioHangActivity;
+import com.eshop.android.anata.View.ThanhToan.ThanhToanActivity;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
 
 import java.io.ByteArrayInputStream;
@@ -56,7 +60,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     TextView[] txtDots;
     LinearLayout layoutDots;
     List<Fragment> fragments;
-    TextView txtTensanpham, txtGiatien, txtTenCuaHangDongGoi, txtThongTinChiTiet, txtVietDanhGia, txtXemTatCaNhanXet, txtGioHang;
+    TextView txtTensanpham, txtGiatien, txtGiamGia, txtTenCuaHangDongGoi, txtThongTinChiTiet, txtVietDanhGia, txtXemTatCaNhanXet, txtGioHang;
     Toolbar toolbar;
     ImageView imgXemThemChiTiet, imgThemMongMuon, imgChiaSe;
 
@@ -71,6 +75,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     boolean onPause = false;
     boolean kiemtraMongMuon = false;
 
+    Button btnMuaNgay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +85,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         layoutDots = (LinearLayout) findViewById(R.id.layoutDots);
         txtTensanpham = (TextView) findViewById(R.id.txtTenSanPham);
         txtGiatien = (TextView) findViewById(R.id.txtGiaTien);
+        txtGiamGia = (TextView) findViewById(R.id.txtGiamGia);
         txtTenCuaHangDongGoi = (TextView) findViewById(R.id.txtCuaHangDongGoi);
         txtThongTinChiTiet = (TextView) findViewById(R.id.txtThongTinChiTiet);
         txtVietDanhGia = (TextView) findViewById(R.id.txtVietDanhGia);
@@ -91,6 +98,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         imgThemMongMuon = (ImageView) findViewById(R.id.imgMongMuon);
         imgChiaSe = (ImageView) findViewById(R.id.imgChiaSe);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        btnMuaNgay = (Button) findViewById(R.id.btnMuaNgay);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,6 +112,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         imgThemGioHang.setOnClickListener(this);
         imgThemMongMuon.setOnClickListener(this);
         imgChiaSe.setOnClickListener(this);
+        btnMuaNgay.setOnClickListener(this);
 
 
     }
@@ -117,11 +126,29 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         sanPhamGioHang.setSOLUONGTONKHO(sanPham.getSOLUONG());
 
         txtTensanpham.setText(sanPham.getTENSP());
+
+        ChiTietKhuyenMai chiTietKhuyenMai = sanPham.getChiTietKhuyenMai();
+
+        int giatien = sanPham.getGIA();
+
+        if (chiTietKhuyenMai != null) {
+            int phantramkm = chiTietKhuyenMai.getPHANTRAMKM();
+            if (phantramkm != 0) {
+                NumberFormat numberFormat = new DecimalFormat("###,###");
+                String gia = numberFormat.format(giatien);
+                txtGiamGia.setVisibility(View.VISIBLE);
+                txtGiamGia.setPaintFlags(txtGiamGia.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                txtGiamGia.setText(gia + " VNĐ ");
+                giatien = giatien * phantramkm / 100;
+            }
+        }
+
         NumberFormat numberFormat = new DecimalFormat("###,###");
-        String gia = numberFormat.format(sanPham.getGIA()).toString();
-        txtGiatien.setText(gia + " VNĐ");
+        String gia = numberFormat.format(giatien);
+        txtGiatien.setText(gia + " VNĐ ");
         txtTenCuaHangDongGoi.setText(sanPham.getTENNV());
         txtThongTinChiTiet.setText(sanPham.getTHONGTIN().substring(0, 100));
+
         if (sanPham.getTHONGTIN().length() < 100) {
             imgXemThemChiTiet.setVisibility(View.GONE);
 
@@ -336,6 +363,23 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
                 break;
             case R.id.imgChiaSe:
+
+                break;
+            case R.id.btnMuaNgay:
+                fragment = fragments.get(0);
+                view = fragment.getView();
+                imageView = (ImageView) view.findViewById(R.id.imgSlider);
+                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+
+                sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
+                sanPhamGioHang.setSOLUONG(1);
+                presenterLogicChiTietSanPham.ThemGioHang(sanPhamGioHang, this);
+
+                Intent iThanhToan = new Intent(ChiTietSanPhamActivity.this, ThanhToanActivity.class);
+                startActivity(iThanhToan);
 
                 break;
         }

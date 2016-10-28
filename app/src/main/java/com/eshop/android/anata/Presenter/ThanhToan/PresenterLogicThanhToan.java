@@ -19,30 +19,37 @@ public class PresenterLogicThanhToan implements IPresenterThanhToan {
     ViewThanhToan viewThanhToan;
     ModelThanhToan modelThanhToan;
     ModelGioHang modelGioHang;
-    public PresenterLogicThanhToan(ViewThanhToan viewThanhToan) {
+    List<SanPham> sanPhamList;
+
+    public PresenterLogicThanhToan(ViewThanhToan viewThanhToan, Context context) {
         this.viewThanhToan = viewThanhToan;
         modelThanhToan = new ModelThanhToan();
         modelGioHang = new ModelGioHang();
+        modelGioHang.MoKetNoiSQL(context);
+
     }
 
 
     @Override
     public void ThemHoaDon(HoaDon hoaDon) {
         boolean kiemtra = modelThanhToan.ThemHoaDon(hoaDon);
-        if(kiemtra){
+        if (kiemtra) {
             viewThanhToan.DatHangThanhCong();
-        }else{
+
+            int dem = sanPhamList.size();
+            for (int i = 0; i < dem; i++) {
+                modelGioHang.XoaSanPhamTrongGioHang(sanPhamList.get(i).getMASP());
+            }
+
+        } else {
             viewThanhToan.DatHangThatBai();
         }
     }
 
     @Override
-    public void LayDanhSachSanPhamTrongGioHang(Context context) {
-        modelGioHang.MoKetNoiSQL(context);
-        List<SanPham> sanPhamList = modelGioHang.LayDanhSachSanPhamTrongGioHang();
-        if(sanPhamList.size() > 0){
-            viewThanhToan.LayDanhSachSanPhamTrongGioHang(sanPhamList);
+    public void LayDanhSachSanPhamTrongGioHang() {
+        sanPhamList = modelGioHang.LayDanhSachSanPhamTrongGioHang();
+        viewThanhToan.LayDanhSachSanPhamTrongGioHang(sanPhamList);
 
-        }
     }
 }

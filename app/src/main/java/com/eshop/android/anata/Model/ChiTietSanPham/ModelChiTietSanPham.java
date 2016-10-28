@@ -1,6 +1,9 @@
 package com.eshop.android.anata.Model.ChiTietSanPham;
 
+import android.util.Log;
+
 import com.eshop.android.anata.ConnectInternet.DownloadJSON;
+import com.eshop.android.anata.Model.ObjectClass.ChiTietKhuyenMai;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietSanPham;
 import com.eshop.android.anata.Model.ObjectClass.DanhGia;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
@@ -97,11 +100,16 @@ public class ModelChiTietSanPham {
 
         try {
             dataJSON = downloadJSON.get();
+            Log.d("kiemtra",dataJSON.toString());
             JSONObject jsonObject = new JSONObject(dataJSON);
             JSONArray jsonArrayDanhSachSanPham = jsonObject.getJSONArray(tenmang);
             int count = jsonArrayDanhSachSanPham.length();
             for (int i = 0; i < count; i++) {
                 JSONObject object = jsonArrayDanhSachSanPham.getJSONObject(i);
+                ChiTietKhuyenMai chiTietKhuyenMai = new ChiTietKhuyenMai();
+                chiTietKhuyenMai.setPHANTRAMKM(object.getInt("PHANTRAMKM"));
+
+                sanPham.setChiTietKhuyenMai(chiTietKhuyenMai);
                 sanPham.setMASP(object.getInt("MASP"));
                 sanPham.setTENSP(object.getString("TENSP"));
                 sanPham.setGIA(object.getInt("GIATIEN"));
@@ -113,7 +121,6 @@ public class ModelChiTietSanPham {
                 sanPham.setMANV(object.getInt("MANV"));
                 sanPham.setTENNV(object.getString("TENNV"));
                 sanPham.setLUOTMUA(object.getInt("LUOTMUA"));
-
                 JSONArray jsonArrayThongSoKyThuat = object.getJSONArray("THONGSOKYTHUAT");
                 for (int j = 0; j < jsonArrayThongSoKyThuat.length(); j++) {
                     JSONObject jsonObject1 = jsonArrayThongSoKyThuat.getJSONObject(j);
@@ -123,6 +130,7 @@ public class ModelChiTietSanPham {
                         ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
                         chiTietSanPham.setTenchitiet(tenchitiet);
                         chiTietSanPham.setGiatri(jsonObject1.getString(tenchitiet));
+                        Log.d("kiemtra",tenchitiet);
                         chiTietSanPhams.add(chiTietSanPham);
                     }
 

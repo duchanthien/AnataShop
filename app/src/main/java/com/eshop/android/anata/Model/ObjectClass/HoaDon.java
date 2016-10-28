@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class HoaDon {
-    int MAHD, CHUYENKHOAN;
+    int MAHD, HINHTHUCTHANHTOAN;
     String NGAYMUA,NGAYGIAO,TRANGTHAI,TENNGUOINHAN,SODT,DIACHI,MACHUYENKHOAN;
     List<ChiTietHoaDon> chiTietHoaDonList;
 
@@ -20,12 +20,12 @@ public class HoaDon {
         this.MAHD = MAHD;
     }
 
-    public int getCHUYENKHOAN() {
-        return CHUYENKHOAN;
+    public int getHINHTHUCTHANHTOAN() {
+        return HINHTHUCTHANHTOAN;
     }
 
-    public void setCHUYENKHOAN(int CHUYENKHOAN) {
-        this.CHUYENKHOAN = CHUYENKHOAN;
+    public void setHINHTHUCTHANHTOAN(int HINHTHUCTHANHTOAN) {
+        this.HINHTHUCTHANHTOAN = HINHTHUCTHANHTOAN;
     }
 
     public String getNGAYMUA() {

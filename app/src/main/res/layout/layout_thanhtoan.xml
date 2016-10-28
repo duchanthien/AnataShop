@@ -53,7 +53,7 @@
             android:layout_marginTop="4dp"
             android:background="@drawable/border_edittext_thanhtoan"
             android:hint="Tên người nhận"
-            android:textColor="@color/grey"
+            android:textColor="@color/secondaryText"
             android:textSize="14sp"
             android:typeface="serif" />
 
@@ -67,7 +67,7 @@
             android:gravity="top"
             android:hint="Địa chỉ giao hàng"
             android:inputType="text|textMultiLine"
-            android:textColor="@color/grey"
+            android:textColor="@color/secondaryText"
             android:textSize="14sp"
             android:typeface="serif" />
 
@@ -79,7 +79,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/border_edittext_thanhtoan"
             android:hint="Số điện thoại"
-            android:textColor="@color/grey"
+            android:textColor="@color/secondaryText"
             android:textSize="14sp"
             android:typeface="serif" />
 
@@ -101,23 +101,57 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imgShip"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/white"
-                android:scaleType="centerInside"
-                android:src="@drawable/ship" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imgVisa"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                <ImageButton
+                    android:id="@+id/imgTienMat"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@color/white"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ship" />
+
+                <TextView
+                    android:id="@+id/txtTienMat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trả tiền khi giao hàng"
+                    android:textSize="12sp"
+                    android:typeface="serif" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/white"
-                android:scaleType="centerInside"
-                android:src="@drawable/visa" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/imgChuyenKhoan"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@color/white"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/visa" />
+
+                <TextView
+                    android:id="@+id/txtChuyenKhoan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chuyển khoản"
+                    android:textSize="12sp"
+                    android:typeface="serif" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <CheckBox

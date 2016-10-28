@@ -2,7 +2,7 @@ package com.eshop.android.anata.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Paint;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.eshop.android.anata.Model.ObjectClass.ChiTietKhuyenMai;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.ChiTietSanPham.ChiTietSanPhamActivity;
@@ -70,9 +71,26 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
         Picasso.with(context).load(sanPham.getHINHLON()).resize(140, 140).centerCrop().into(holder.imgHinhSP);
         holder.txtTenSP.setText(sanPham.getTENSP());
 
+        ChiTietKhuyenMai chiTietKhuyenMai = sanPham.getChiTietKhuyenMai();
+
+        int giatien = sanPham.getGIA();
+
+        if (chiTietKhuyenMai != null) {
+            int phamtramkm = chiTietKhuyenMai.getPHANTRAMKM();
+            if (phamtramkm != 0) {
+                NumberFormat numberFormat = new DecimalFormat("###,###");
+                String gia = numberFormat.format(giatien);
+                holder.txtGiamGia.setVisibility(View.VISIBLE);
+                holder.txtGiamGia.setPaintFlags(holder.txtGiamGia.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.txtGiamGia.setText(gia + " VNĐ ");
+
+                giatien = giatien * phamtramkm / 100;
+            }
+        }
+
         NumberFormat numberFormat = new DecimalFormat("###,###");
-        String gia = numberFormat.format(sanPham.getGIA()).toString();
-        holder.txtGiaTien.setText(gia + " VND ");
+        String gia = numberFormat.format(giatien);
+        holder.txtGiaTien.setText(gia + " VNĐ ");
         holder.cardView.setTag(sanPham.getMASP());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {

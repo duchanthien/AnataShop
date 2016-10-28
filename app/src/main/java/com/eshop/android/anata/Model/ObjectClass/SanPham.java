@@ -9,6 +9,15 @@ public class SanPham {
     int MASP, GIA, SOLUONG, MALOAISP, MATH, MANV, LUOTMUA,SOLUONGTONKHO;
     String TENSP, HINHLON, HINHNHO, THONGTIN,TENNV;
     List<ChiTietSanPham> chiTietSanPhamList;
+    ChiTietKhuyenMai chiTietKhuyenMai;
+
+    public ChiTietKhuyenMai getChiTietKhuyenMai() {
+        return chiTietKhuyenMai;
+    }
+
+    public void setChiTietKhuyenMai(ChiTietKhuyenMai chiTietKhuyenMai) {
+        this.chiTietKhuyenMai = chiTietKhuyenMai;
+    }
 
     byte[] hinhgiohang;
 

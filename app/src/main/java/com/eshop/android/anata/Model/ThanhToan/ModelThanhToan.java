@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.eshop.android.anata.ConnectInternet.DownloadJSON;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietHoaDon;
-import com.eshop.android.anata.Model.ObjectClass.DanhGia;
 import com.eshop.android.anata.Model.ObjectClass.HoaDon;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
 
@@ -38,7 +37,7 @@ public class ModelThanhToan {
         for (int i = 0; i < chiTietHoaDons.size(); i++) {
             chuoijson += "{";
             chuoijson += "\"masp\" : " + chiTietHoaDons.get(i).getMASP() + ",";
-            chuoijson += "\"soluong\": " + chiTietHoaDons.get(i).getSOLUONG();
+            chuoijson += "\"soluong\" : " + chiTietHoaDons.get(i).getSOLUONG();
             if (i == chiTietHoaDons.size() - 1) {
                 chuoijson += "}";
             } else {
@@ -61,28 +60,28 @@ public class ModelThanhToan {
         hsDiaChi.put("diachi", hoaDon.getDIACHI());
 
 
-        HashMap<String, String> hsChuyenKhoan = new HashMap<>();
-        hsChuyenKhoan.put("chuyenkhoan", "0");
+        HashMap<String, String> hsThanhToan = new HashMap<>();
+        hsThanhToan.put("hinhthucthanhtoan", String.valueOf(hoaDon.getHINHTHUCTHANHTOAN()));
 
         attrs.add(hsHam);
         attrs.add(hsDanhSachSP);
         attrs.add(hsTenNguoiNhan);
-        attrs.add(hsDiaChi);
         attrs.add(hsSoDT);
-        attrs.add(hsChuyenKhoan);
+        attrs.add(hsDiaChi);
+        attrs.add(hsThanhToan);
 
-        DownloadJSON downloadJSON = new DownloadJSON(duongdan, attrs);
+        DownloadJSON downloadJSON = new DownloadJSON(duongdan,attrs);
         downloadJSON.execute();
 
         try {
             String dulieuJSON = downloadJSON.get();
             JSONObject jsonObject = new JSONObject(dulieuJSON);
             String ketqua = jsonObject.getString("ketqua");
-            Log.d("kiemtra", ketqua);
-            if (ketqua.equals("true")) {
-                kiemtra = true;
-            } else {
-                kiemtra = false;
+            Log.d("kiemtra",ketqua);
+            if(ketqua.equals("true")){
+                kiemtra =  true;
+            }else{
+                kiemtra =  false;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
