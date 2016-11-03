@@ -60,7 +60,7 @@ public class FragmentChuongTrinhKhuyenMai extends Fragment implements ViewKhuyen
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
             layoutParams.setMargins(0, 10, 0, 10);
             imgView.setLayoutParams(layoutParams);
-            Picasso.with(getContext()).load(list.get(i).getHINHKHUYENMAI()).resize(760, 220).into(imgView);
+            Picasso.with(getContext()).load(list.get(i).getHINHKHUYENMAI()).resize(800, 220).into(imgView);
             lnHinhKhuyenMai.addView(imgView);
         }
 

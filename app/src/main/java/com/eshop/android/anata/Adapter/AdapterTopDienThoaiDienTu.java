@@ -98,6 +98,7 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
             public void onClick(View v) {
                 Intent iChitietSanpham = new Intent(context, ChiTietSanPhamActivity.class);
                 iChitietSanpham.putExtra("masp", (int) v.getTag());
+
                 context.startActivity(iChitietSanpham);
             }
         });

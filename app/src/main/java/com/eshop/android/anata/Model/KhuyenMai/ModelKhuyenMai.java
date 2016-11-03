@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ModelKhuyenMai {
 
-    public List<KhuyenMai> LayDanhSachSanPhamTheoMaLoai(String tenham, String tenmang) {
+    public List<KhuyenMai> LayDanhSachSanPhamTheoKhuyenMai(String tenham, String tenmang) {
         List<KhuyenMai> khuyenMaiList = new ArrayList<>();
 
         List<HashMap<String, String>> attrs = new ArrayList<>();

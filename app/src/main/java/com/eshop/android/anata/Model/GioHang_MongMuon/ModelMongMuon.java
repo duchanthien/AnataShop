@@ -61,6 +61,8 @@ public class ModelMongMuon {
         return phamList;
     }
 
+
+
     public boolean XoaSanPhamMongMuon(int masp) {
         int id = database.delete(DatabaseSanPham.TB_YEUTHICH, DatabaseSanPham.TB_YEUTHICH_MASP + " = " + masp, null);
         if (id > 0) {

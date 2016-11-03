@@ -45,4 +45,12 @@ public class PresenterLogicDanhGia implements IPresenterDanhGia {
         }
 
     }
+    public void LayDanhSachDanhGiaSanPham(int masp, int limit) {
+        List<DanhGia> danhGiaList = modelDanhGia.LayDanhSachDanhGiaCuaSanPham(masp, limit);
+        if(danhGiaList.size() > 0){
+            ViewDanhGia.HienThiDanhSachDanhGiaTheoSanPham(danhGiaList);
+
+        }
+
+    }
 }

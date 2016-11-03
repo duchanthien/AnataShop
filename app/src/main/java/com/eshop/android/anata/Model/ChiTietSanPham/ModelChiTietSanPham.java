@@ -58,8 +58,8 @@ public class ModelChiTietSanPham {
                 DanhGia danhGia = new DanhGia();
                 JSONObject object = jsonArrayDanhSachDanhGia.getJSONObject(i);
                 danhGia.setMASP(object.getInt("MASP"));
-                danhGia.setMADG(object.getString("MADG"));
-                danhGia.setTENTHIETBI(object.getString("TENTHIETBI"));
+                danhGia.setMADG(object.getInt("MADG"));
+                danhGia.setTENNGUOIDANHGIA(object.getString("TENNGUOIDANHGIA"));
                 danhGia.setTIEUDE(object.getString("TIEUDE"));
                 danhGia.setNOIDUNG(object.getString("NOIDUNG"));
                 danhGia.setSOSAO(object.getInt("SOSAO"));
@@ -100,7 +100,7 @@ public class ModelChiTietSanPham {
 
         try {
             dataJSON = downloadJSON.get();
-            Log.d("kiemtra",dataJSON.toString());
+            //Log.d("kiemtra",dataJSON.toString());
             JSONObject jsonObject = new JSONObject(dataJSON);
             JSONArray jsonArrayDanhSachSanPham = jsonObject.getJSONArray(tenmang);
             int count = jsonArrayDanhSachSanPham.length();

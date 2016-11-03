@@ -41,6 +41,6 @@
         android:layout_gravity="bottom"
         android:background="@color/bgLogo"
         android:padding="20dp"
-        android:text="Mua ngay"
+        android:text="Tiến hành thanh toán"
         android:textStyle="bold" />
 </android.support.design.widget.CoordinatorLayout>

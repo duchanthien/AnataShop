@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_danhgia"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/activity_vertical_margin"
     tools:context="com.eshop.android.anata.View.DanhGia.ThemDanhGiaActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Nhận xét về sản phẩm này" />
+        android:text="Nhận xét về sản phẩm này"
+        android:typeface="serif" />
 
     <RatingBar
         android:id="@+id/rbDanhGiaSanPham"
@@ -36,8 +37,8 @@
             android:layout_height="wrap_content"
             android:hint="Tiêu đề đánh giá"
             android:lines="1"
-            android:typeface="serif"
-            android:maxLength="50" />
+            android:maxLength="50"
+            android:typeface="serif" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -52,9 +53,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="nội dung đánh giá"
-            android:typeface="serif"
             android:maxLines="3"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:typeface="serif" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ipedtNguoiDanhGia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/edtNguoiDanhGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên người đánh giá"
+            android:maxLines="3"
+            android:scrollbars="vertical"
+            android:typeface="serif" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -62,10 +79,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
         android:background="@color/bgLogo"
-        android:text="Đồng ý" />
-
-
+        android:text="Đồng ý"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 </LinearLayout>
+

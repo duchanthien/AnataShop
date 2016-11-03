@@ -1,8 +1,10 @@
 package com.eshop.android.anata.Presenter.TrangDanhMucSanPham;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.eshop.android.anata.Model.GioHang_MongMuon.ModelGioHang;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.Model.TrangDanhMucSanPham.ModelSanPhamTheoDanhMuc;
 import com.eshop.android.anata.View.TrangDanhMucSanPham.ViewHienThiSanPhamTheoDanhMuc;
@@ -18,10 +20,12 @@ public class PresenterLogicSanPhamTheoDanhMuc implements IPresenterSanPhamTheoDa
 
     ViewHienThiSanPhamTheoDanhMuc viewHienThiSanPhamTheoDanhMuc;
     ModelSanPhamTheoDanhMuc modelSanPhamTheoDanhMuc;
+    ModelGioHang modelGioHang;
 
     public PresenterLogicSanPhamTheoDanhMuc(ViewHienThiSanPhamTheoDanhMuc viewHienThiSanPhamTheoDanhMuc) {
         this.viewHienThiSanPhamTheoDanhMuc = viewHienThiSanPhamTheoDanhMuc;
         modelSanPhamTheoDanhMuc = new ModelSanPhamTheoDanhMuc();
+        modelGioHang = new ModelGioHang();
     }
 
     @Override
@@ -53,5 +57,13 @@ public class PresenterLogicSanPhamTheoDanhMuc implements IPresenterSanPhamTheoDa
             progressBar.setVisibility(View.GONE);
         }
         return  sanPhamList;
+    }
+    public int DemSanPhamCoTrongGioHang(Context context) {
+        modelGioHang.MoKetNoiSQL(context);
+        List<SanPham> phamList = modelGioHang.LayDanhSachSanPhamTrongGioHang();
+
+        int dem = phamList.size();
+
+        return dem;
     }
 }

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.eshop.android.anata.Adapter.AdapterGioHang;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
@@ -19,13 +20,12 @@ import com.eshop.android.anata.View.ThanhToan.ThanhToanActivity;
 
 import java.util.List;
 
-public class GioHangActivity extends AppCompatActivity implements ViewGioHang,View.OnClickListener {
+public class GioHangActivity extends AppCompatActivity implements ViewGioHang, View.OnClickListener {
 
     RecyclerView recyclerGioHang;
     Button btnMuaNgay;
     PresenterLogicGioHang presenterLogicGioHang;
     Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewGioHang,Vi
         btnMuaNgay = (Button) findViewById(R.id.btnMuaNgay);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         presenterLogicGioHang = new PresenterLogicGioHang(this);
         presenterLogicGioHang.LayDanhSachSanPhamTrongGioHang(this);
@@ -62,10 +63,16 @@ public class GioHangActivity extends AppCompatActivity implements ViewGioHang,Vi
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch(id){
+        switch (id) {
             case R.id.btnMuaNgay:
-                Intent iThanhToan = new Intent(GioHangActivity.this, ThanhToanActivity.class);
-                startActivity(iThanhToan);
+                int dem = presenterLogicGioHang.DemSanPhamTrongGioHang(this);
+                if (dem > 0) {
+                    Intent iThanhToan = new Intent(this, ThanhToanActivity.class);
+                    startActivity(iThanhToan);
+                }else{
+                    Toast.makeText(this,"Bạn chưa mua hàng",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 break;
         }
 

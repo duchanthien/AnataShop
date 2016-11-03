@@ -1,15 +1,18 @@
 package com.eshop.android.anata.View.ChiTietSanPham;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -32,6 +35,7 @@ import android.widget.Toast;
 
 import com.eshop.android.anata.Adapter.AdapterDanhGia;
 import com.eshop.android.anata.Adapter.AdapterViewPagerSlider;
+import com.eshop.android.anata.Model.DangNhap_DangKy.ModelDangNhap;
 import com.eshop.android.anata.Model.GioHang_MongMuon.ModelMongMuon;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietKhuyenMai;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietSanPham;
@@ -40,11 +44,26 @@ import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.Presenter.ChiTietSanPham.FragmentSliderChiTietSanPham;
 import com.eshop.android.anata.Presenter.ChiTietSanPham.PresenterLogicChiTietSanPham;
 import com.eshop.android.anata.R;
+import com.eshop.android.anata.View.DangNhapDangKy.DangNhapActivity;
 import com.eshop.android.anata.View.DanhGia.DanhSachDanhGiaActivity;
 import com.eshop.android.anata.View.DanhGia.ThemDanhGiaActivity;
 import com.eshop.android.anata.View.GioHang.GioHangActivity;
+import com.eshop.android.anata.View.MongMuon.MongMuonActivity;
 import com.eshop.android.anata.View.ThanhToan.ThanhToanActivity;
+import com.eshop.android.anata.View.TimKiem.TimKiemActivity;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.facebook.share.internal.ShareFeedContent;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareMediaContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,7 +72,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChiTietSanPham, ViewPager.OnPageChangeListener, View.OnClickListener {
+public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, ViewChiTietSanPham, ViewPager.OnPageChangeListener, View.OnClickListener {
 
     ViewPager viewPager;
     PresenterLogicChiTietSanPham presenterLogicChiTietSanPham;
@@ -73,9 +92,16 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     SanPham sanPhamGioHang;
     public static int soSanPhamTrongGioHang;
     boolean onPause = false;
-    boolean kiemtraMongMuon = false;
+    public static boolean kiemtraMongMuon = false;
 
-    Button btnMuaNgay;
+    Button btnMuaNgay, btnBaoVeNguoiMuahang;
+    String tennguoidung = "";
+    AccessToken accessToken;
+    Menu menu;
+    MenuItem ItemDangnhap, ItemDangxuat;
+    ModelDangNhap modelDangNhap;
+    GoogleApiClient googleApiClient;
+    GoogleSignInResult googleSignInResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +123,25 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         imgThemGioHang = (ImageButton) findViewById(R.id.imgThemGioHang);
         imgThemMongMuon = (ImageView) findViewById(R.id.imgMongMuon);
         imgChiaSe = (ImageView) findViewById(R.id.imgChiaSe);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_chitiet);
         btnMuaNgay = (Button) findViewById(R.id.btnMuaNgay);
-
+        btnBaoVeNguoiMuahang = (Button) findViewById(R.id.btnBaoVeNguoiMuaHang);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         masp = getIntent().getIntExtra("masp", 0);
         presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterLogicChiTietSanPham.LayChiTietSanPham(masp);
         presenterLogicChiTietSanPham.LayDanhSachDanhGiaCuaSanPham(masp, 0);
+
+        modelDangNhap = new ModelDangNhap();
+        googleApiClient = modelDangNhap.layGoogleApiClient(this, this);
 
         txtVietDanhGia.setOnClickListener(this);
         txtXemTatCaNhanXet.setOnClickListener(this);
@@ -113,6 +149,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         imgThemMongMuon.setOnClickListener(this);
         imgChiaSe.setOnClickListener(this);
         btnMuaNgay.setOnClickListener(this);
+        btnBaoVeNguoiMuahang.setOnClickListener(this);
 
 
     }
@@ -186,7 +223,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         lnThongSoKyThuat.addView(txtTieuDeThongSoKyThuat);
 
         for (int i = 0; i < chiTietSanPhamList.size(); i++) {
-            Log.d("Kiemtra", chiTietSanPhamList.get(i).getTenchitiet());
+            //Log.d("Kiemtra", chiTietSanPhamList.get(i).getTenchitiet());
 
             LinearLayout lnChiTiet = new LinearLayout(this);
             lnChiTiet.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -238,7 +275,15 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         View giaoDienCustomGioHang = MenuItemCompat.getActionView(iGioHang);
         txtGioHang = (TextView) giaoDienCustomGioHang.findViewById(R.id.txtSoluongSanPhamGioHang);
 
-        txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+        //txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+        int dem = presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this);
+        if (dem > 0) {
+            txtGioHang.setText(String.valueOf(dem));
+            txtGioHang.setVisibility(View.VISIBLE);
+        } else {
+            txtGioHang.setVisibility(View.INVISIBLE);
+            txtGioHang.setText(String.valueOf(dem));
+        }
         giaoDienCustomGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,12 +292,50 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 startActivity(iGioHang);
             }
         });
+        MenuItem iTimKiem = menu.findItem(R.id.itSearch);
+        iTimKiem.setVisible(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.itDangNhap:
+                if (accessToken == null && googleSignInResult == null && modelDangNhap.LayCachedDangNhap(this).equals("")) {
+                    Intent iDangNhap = new Intent(this, DangNhapActivity.class);
+                    startActivity(iDangNhap);
+                }
+                break;
+            case R.id.itDangXuat:
+                if (accessToken != null) {
+                    LoginManager.getInstance().logOut();
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+                }
+
+                if (googleSignInResult != null) {
+                    Auth.GoogleSignInApi.signOut(googleApiClient);
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+                }
+                if (!modelDangNhap.LayCachedDangNhap(this).equals("")) {
+                    modelDangNhap.CapNhatCachedDangNhap(this, "");
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+                }
+                break;
+            case R.id.itMongMuon:
+                Intent iMongMuon = new Intent(this, MongMuonActivity.class);
+                startActivity(iMongMuon);
+                break;
+            case R.id.itSearch:
+                Intent iTimKiem = new Intent(this, TimKiemActivity.class);
+                startActivity(iTimKiem);
+                break;
+
+        }
+        return true;
     }
 
     private void addDotSlider(int vitrihientai) {
@@ -340,7 +423,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
                 sanPhamGioHang.setSOLUONG(1);
                 presenterLogicChiTietSanPham.ThemGioHang(sanPhamGioHang, this);
-
+                txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+                txtGioHang.setVisibility(View.VISIBLE);
                 break;
             case R.id.imgMongMuon:
                 kiemtraMongMuon = !kiemtraMongMuon;
@@ -363,6 +447,26 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
                 break;
             case R.id.imgChiaSe:
+                /*fragment = fragments.get(0);
+                view = fragment.getView();
+                imageView = (ImageView) view.findViewById(R.id.imgSlider);
+                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                SharePhoto sharePhoto1 = new SharePhoto.Builder()
+                        .setBitmap(bitmap).build();*/
+
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle(txtTensanpham.getText().toString())
+                        .setContentDescription(
+                                txtGiatien.getText().toString())
+                        .setContentUrl(Uri.parse("https://www.facebook.com/duc.hanthien"))
+                        .build();
+                /*ShareContent shareContent = new ShareMediaContent.Builder()
+                        .addMedium(sharePhoto1)
+                        .build();*/
+                ShareDialog shareDialog = new ShareDialog(this);
+                //shareDialog.show(shareContent, ShareDialog.Mode.AUTOMATIC);
+                shareDialog.show(linkContent);
+
 
                 break;
             case R.id.btnMuaNgay:
@@ -378,9 +482,35 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
                 sanPhamGioHang.setSOLUONG(1);
                 presenterLogicChiTietSanPham.ThemGioHang(sanPhamGioHang, this);
 
-                Intent iThanhToan = new Intent(ChiTietSanPhamActivity.this, ThanhToanActivity.class);
-                startActivity(iThanhToan);
-
+                if (accessToken == null && googleSignInResult == null && modelDangNhap.LayCachedDangNhap(this).equals("")) {
+                    Intent iDangNhap = new Intent(this, DangNhapActivity.class);
+                    startActivity(iDangNhap);
+                } else {
+                    Intent iThanhToan = new Intent(ChiTietSanPhamActivity.this, ThanhToanActivity.class);
+                    startActivity(iThanhToan);
+                }
+                break;
+            case R.id.btnBaoVeNguoiMuaHang:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Bảo vệ người mua hàng");
+                View viewDialog = getLayoutInflater().inflate(R.layout.custom_dialog_chitietsanpham, null, false);
+                builder.setView(viewDialog);
+                TextView txtNoidung = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe);
+                TextView txtNoidung1 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe2);
+                TextView txtNoidung2 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe3);
+                TextView txtNoidung3 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe4);
+                String[] mangNoidung = getResources().getStringArray(R.array.mang_noidungbaov);
+                txtNoidung.setText(mangNoidung[0]);
+                txtNoidung1.setText(mangNoidung[1]);
+                txtNoidung2.setText(mangNoidung[2]);
+                txtNoidung3.setText(mangNoidung[3]);
+                builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
                 break;
         }
     }
@@ -455,4 +585,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         onPause = true;
     }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }

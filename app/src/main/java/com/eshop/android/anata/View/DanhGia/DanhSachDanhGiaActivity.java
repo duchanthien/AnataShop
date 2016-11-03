@@ -35,6 +35,7 @@ public class DanhSachDanhGiaActivity extends AppCompatActivity implements ViewDa
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         masp = getIntent().getIntExtra("masp", 0);
         danhGiaList = new ArrayList<>();

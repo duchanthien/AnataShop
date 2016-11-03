@@ -52,6 +52,8 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         txtTienMat = (TextView) findViewById(R.id.txtTienMat);
         txtChuyenKhoan = (TextView) findViewById(R.id.txtChuyenKhoan);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imgChuyenKhoan.setOnClickListener(this);
         imgTienMat.setOnClickListener(this);
         btnThanhToan.setOnClickListener(this);

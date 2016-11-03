@@ -1,8 +1,14 @@
 package com.eshop.android.anata.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -13,14 +19,13 @@ import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eshop.android.anata.Model.ObjectClass.LoaiSanPham;
 import com.eshop.android.anata.Model.TrangChu.XuLyMenu.XulyJSONmenu;
 import com.eshop.android.anata.R;
+import com.eshop.android.anata.View.TrangDanhMucSanPham.SanPhamTheoDanhMucFragment;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -128,7 +133,23 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         viewGroupCha.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.d("MaloaiSP", loaiSanPhamList.get(vitriGroupCha).getTENLOAISP() + " - " + loaiSanPhamList.get(vitriGroupCha).getMALOAISP());
+                //Log.d("MaloaiSP", loaiSanPhamList.get(vitriGroupCha).getTENLOAISP() + " - " + loaiSanPhamList.get(vitriGroupCha).getMALOAISP());
+
+                FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                SanPhamTheoDanhMucFragment sanPhamTheoDanhMucFragment = new SanPhamTheoDanhMucFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("MALOAITH", loaiSanPhamList.get(vitriGroupCha).getMALOAISP());
+                bundle.putBoolean("KIEMTRA", false);
+                bundle.putString("TENLOAITH", loaiSanPhamList.get(vitriGroupCha).getTENLOAISP());
+
+                sanPhamTheoDanhMucFragment.setArguments(bundle);
+                fragmentTransaction.addToBackStack("TrangChuActivity");
+                fragmentTransaction.replace(R.id.themFragment,sanPhamTheoDanhMucFragment);
+                fragmentTransaction.commit();
+
                 return false;
             }
         });
@@ -182,81 +203,5 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    /*public class SecondAdapter extends BaseExpandableListAdapter {
-        List<LoaiSanPham> listCon;
-
-        public SecondAdapter(List<LoaiSanPham> listCon) {
-            this.listCon = listCon;
-            XulyJSONmenu xulyJSONmenu = new XulyJSONmenu();
-
-            int count = listCon.size();
-            for (int i = 0; i < count; i++) {
-                int maloaisp = listCon.get(i).getMALOAISP();
-                listCon.get(i).setListCon(xulyJSONmenu.LayLoaiSanPhamTheoMaLoai(maloaisp));
-            }
-        }
-
-        @Override
-        public int getGroupCount() {
-            return listCon.size();
-        }
-
-        @Override
-        public int getChildrenCount(int vitriGroupCha) {
-            return listCon.get(vitriGroupCha).getListCon().size();
-        }
-
-        @Override
-        public Object getGroup(int vitriGroupCha) {
-            return listCon.get(vitriGroupCha);
-        }
-
-        @Override
-        public Object getChild(int vitriGroupCha, int vitriGroupCon) {
-            return listCon.get(vitriGroupCha).getListCon().get(vitriGroupCon);
-        }
-
-        @Override
-        public long getGroupId(int vitriGroupCha) {
-            return listCon.get(vitriGroupCha).getMALOAISP();
-        }
-
-        @Override
-        public long getChildId(int vitriGroupCha, int vitriGroupCon) {
-            return listCon.get(vitriGroupCha).getListCon().get(vitriGroupCon).getMALOAISP();
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-
-        @Override
-        public View getGroupView(int vitriGroupCha, boolean isExpanded, View view, ViewGroup viewGroup) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-
-            View viewGroupCha = inflater.inflate(R.layout.custom_layout_group_cha, viewGroup, false);
-            TextView txtTenLoaiSp = (TextView) viewGroupCha.findViewById(R.id.txtTenLoaiSP);
-            txtTenLoaiSp.setText(listCon.get(vitriGroupCha).getTENLOAISP());
-            return viewGroupCha;
-        }
-
-        @Override
-        public View getChildView(int vitriGroupCha, int vitriGroupCon, boolean isExpanded, View view, ViewGroup viewGroup) {
-            TextView tv = new TextView(context);
-            tv.setText(listCon.get(vitriGroupCha).getListCon().get(vitriGroupCon).getTENLOAISP());
-            tv.setPadding(15, 5, 5, 5);
-            tv.setBackgroundColor(Color.YELLOW);
-            tv.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            return tv;
-        }
-
-        @Override
-        public boolean isChildSelectable(int i, int i1) {
-            return false;
-        }
-    }*/
 
 }

@@ -66,7 +66,6 @@ public class ModelGioHang {
             sanPhamList.add(sanPham);
             cursor.moveToNext();
         }
-        sqLiteDatabase.close();
         return sanPhamList;
 
     }

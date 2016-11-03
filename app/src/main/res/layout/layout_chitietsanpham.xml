@@ -119,6 +119,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnBaoVeNguoiMuaHang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -129,6 +130,7 @@
                         android:textSize="14sp" />
 
                     <Button
+                        android:id="@+id/btnDamBaoSuHaiLong"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -357,11 +359,11 @@
 
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_chitiet"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/bgToolbar"
-                app:layout_collapseMode="parallax"
+                app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
                 app:theme="@style/menuitemcolor"

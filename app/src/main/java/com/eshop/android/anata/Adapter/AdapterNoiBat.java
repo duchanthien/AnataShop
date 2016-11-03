@@ -1,12 +1,14 @@
 package com.eshop.android.anata.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.R;
 
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.List;
 public class AdapterNoiBat extends RecyclerView.Adapter<AdapterNoiBat.ViewHolder> {
 
     Context context;
-    List<String> mDataset;
+    List<SanPham> mDataset;
 
-    public AdapterNoiBat(Context context, List<String> mDataset) {
+    public AdapterNoiBat(Context context, List<SanPham> mDataset) {
         this.context = context;
         this.mDataset = mDataset;
     }
@@ -33,11 +35,30 @@ public class AdapterNoiBat extends RecyclerView.Adapter<AdapterNoiBat.ViewHolder
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
+    //chạy thứ 2
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView txtTieuDeNoiBat;
+        RecyclerView recyclerNoiBat;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            txtTieuDeNoiBat = (TextView) itemView.findViewById(R.id.txtTieuDeNoiBat);
+            recyclerNoiBat = (RecyclerView) itemView.findViewById(R.id.recyclerItemNoiBat);
+        }
+    }
 
     //chạy thứ 3
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tv.setText(mDataset.get(position));
+        SanPham sanPham = mDataset.get(position);
+
+        AdapterTopDienThoaiDienTu adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(context,R.layout.custom_layout_topdienthoaimaytinhbang,mDataset);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        holder.recyclerNoiBat.setLayoutManager(layoutManager);
+        holder.recyclerNoiBat.setAdapter(adapterTopDienThoaiDienTu);
+
+
     }
 
 
@@ -46,13 +67,5 @@ public class AdapterNoiBat extends RecyclerView.Adapter<AdapterNoiBat.ViewHolder
         return mDataset.size();
     }
 
-    //chạy thứ 2
-    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tv = (TextView)itemView.findViewById(R.id.tvNoiBat);
-        }
-    }
 }

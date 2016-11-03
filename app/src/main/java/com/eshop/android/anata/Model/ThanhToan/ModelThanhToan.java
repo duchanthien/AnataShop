@@ -75,6 +75,7 @@ public class ModelThanhToan {
 
         try {
             String dulieuJSON = downloadJSON.get();
+            Log.d("kiemtra",dulieuJSON.toString());
             JSONObject jsonObject = new JSONObject(dulieuJSON);
             String ketqua = jsonObject.getString("ketqua");
             Log.d("kiemtra",ketqua);

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.eshop.android.anata.ConnectInternet.DownloadJSON;
 import com.eshop.android.anata.Model.ObjectClass.DanhGia;
-import com.eshop.android.anata.Model.ObjectClass.NhanVien;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
 
 import org.json.JSONArray;
@@ -56,8 +55,8 @@ public class ModelDanhGia {
                 DanhGia danhGia = new DanhGia();
                 JSONObject object = jsonArrayDanhSachDanhGia.getJSONObject(i);
                 danhGia.setMASP(object.getInt("MASP"));
-                danhGia.setMADG(object.getString("MADG"));
-                danhGia.setTENTHIETBI(object.getString("TENTHIETBI"));
+                danhGia.setMADG(object.getInt("MADG"));
+                danhGia.setTENNGUOIDANHGIA(object.getString("TENNGUOIDANHGIA"));
                 danhGia.setTIEUDE(object.getString("TIEUDE"));
                 danhGia.setNOIDUNG(object.getString("NOIDUNG"));
                 danhGia.setSOSAO(object.getInt("SOSAO"));
@@ -85,15 +84,15 @@ public class ModelDanhGia {
         hsHam.put("ham","ThemDanhGia");
 
 
-        HashMap<String, String> hsMDG = new HashMap<>();
-        hsMDG.put("madg",danhGia.getMADG());
+      /*  HashMap<String, String> hsMDG = new HashMap<>();
+        hsMDG.put("madg", String.valueOf(danhGia.getMADG()));*/
 
         HashMap<String, String> hsMASP = new HashMap<>();
         hsMASP.put("masp", String.valueOf(danhGia.getMASP()));
 
 
-        HashMap<String, String> hsTenThietBi = new HashMap<>();
-        hsTenThietBi.put("tenthietbi",danhGia.getTENTHIETBI());
+        HashMap<String, String> hsTenNguoiDanhGia = new HashMap<>();
+        hsTenNguoiDanhGia.put("tennguoidanhgia",danhGia.getTENNGUOIDANHGIA());
 
 
         HashMap<String, String> hsTieuDe = new HashMap<>();
@@ -106,9 +105,8 @@ public class ModelDanhGia {
         hsSoSao.put("sosao", String.valueOf(danhGia.getSOSAO()));
 
         attrs.add(hsHam);
-        attrs.add(hsMDG);
         attrs.add(hsMASP);
-        attrs.add(hsTenThietBi);
+        attrs.add(hsTenNguoiDanhGia);
         attrs.add(hsTieuDe);
         attrs.add(hsNoiDung);
         attrs.add(hsSoSao);

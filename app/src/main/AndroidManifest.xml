@@ -14,6 +14,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider331481703858471"
+            android:exported="true" />
 
         <activity
             android:name=".View.ManHinhChao.ManHinhChaoActivity"
@@ -35,14 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.TrangChu.TrangChuActivity" />
         </activity>
-        <activity
-            android:name=".View.TrangDanhMucSanPham.SanPhamTheoDanhMucActivity"
-            android:label="@string/danhmuc_activity_name"
-            android:parentActivityName=".View.TrangChu.TrangChuActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".View.TrangChu.TrangChuActivity" />
-        </activity>
+
         <activity
             android:name=".View.ChiTietSanPham.ChiTietSanPhamActivity"
             android:label="@string/chitietsanpham_activity_name"
@@ -50,6 +47,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.TrangChu.TrangChuActivity" />
+
         </activity>
         <activity
             android:name=".View.DanhGia.ThemDanhGiaActivity"
@@ -61,8 +59,8 @@
         </activity>
         <activity
             android:name=".View.DanhGia.DanhSachDanhGiaActivity"
-            android:parentActivityName=".View.ChiTietSanPham.ChiTietSanPhamActivity"
-            android:label="@string/danhgia_activity_name">
+            android:label="@string/danhgia_activity_name"
+            android:parentActivityName=".View.ChiTietSanPham.ChiTietSanPhamActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.ChiTietSanPham.ChiTietSanPhamActivity" />
@@ -90,6 +88,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.TrangChu.TrangChuActivity" />
+        </activity>
+        <activity
+            android:name=".View.TimKiem.TimKiemActivity"
+            android:parentActivityName=".View.TrangChu.TrangChuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.TrangChu.TrangChuActivity" />
+
         </activity>
     </application>
 

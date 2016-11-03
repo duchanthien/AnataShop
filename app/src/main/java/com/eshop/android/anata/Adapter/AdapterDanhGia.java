@@ -59,7 +59,7 @@ public class AdapterDanhGia extends RecyclerView.Adapter<AdapterDanhGia.ViewHold
         DanhGia danhGia = danhGias.get(position);
         holder.txtTieuDeDanhGia.setText(danhGia.getTIEUDE());
         holder.txtNoiDungDanhGia.setText(danhGia.getNOIDUNG());
-        holder.txtDuocDanhGiaBoi.setText("Được đánh giá bởi " + danhGia.getTENTHIETBI() + " ngày " + danhGia.getNGAYDANHGIA());
+        holder.txtDuocDanhGiaBoi.setText("Được đánh giá bởi " + danhGia.getTENNGUOIDANHGIA() + " ngày " + danhGia.getNGAYDANHGIA());
         holder.ratingBar.setRating(danhGia.getSOSAO());
 
     }

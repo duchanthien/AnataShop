@@ -17,7 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.DangNhapDangKy.DangNhapActivity;
 import com.eshop.android.anata.View.GioHang.GioHangActivity;
 import com.eshop.android.anata.View.MongMuon.MongMuonActivity;
+import com.eshop.android.anata.View.TimKiem.TimKiemActivity;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentChuongTrinhKhuyenMai;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentDienTu;
 import com.eshop.android.anata.View.TrangChu.Fragment.FragmentLamDep;
@@ -55,7 +58,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, OnOffsetChangedListener {
+public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, OnOffsetChangedListener {
 
     // 192.168.1.102
     public static String SERVER_NAME = "http://192.168.80.1:8080/webanata/loaisanpham.php";
@@ -80,6 +83,8 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     LinearLayout linearLayout;
     TextView txtGioHang;
     boolean onPause = false;
+    Button btnSearch;
+    ImageButton btnCameraSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +99,8 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         linearLayout = (LinearLayout) appBarLayout.findViewById(R.id.lnSearch);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
+        btnCameraSearch = (ImageButton) findViewById(R.id.btnCameraSearch);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -107,13 +114,14 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
-
         presenterLogicXuLyMenu = new PresenterLogicXuLyMenu(TrangChuActivity.this);
         modelDangNhap = new ModelDangNhap();
         presenterLogicXuLyMenu.LayDanhSachMenu();
         googleApiClient = modelDangNhap.layGoogleApiClient(TrangChuActivity.this, this);
 
         appBarLayout.addOnOffsetChangedListener(this);
+        btnSearch.setOnClickListener(this);
+        btnCameraSearch.setOnClickListener(this);
     }
 
     public void setupViewPager(ViewPager viewPager) {
@@ -181,7 +189,14 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         txtGioHang = (TextView) giaoDienCustomGioHang.findViewById(R.id.txtSoluongSanPhamGioHang);
 
         PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
-        txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+        int dem = presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this);
+        txtGioHang.setText("");
+        if(dem > 0){
+            txtGioHang.setText(String.valueOf(dem));
+            txtGioHang.setVisibility(View.VISIBLE);
+        }else{
+            txtGioHang.setVisibility(View.INVISIBLE);
+        }
 
         giaoDienCustomGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +262,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                 Intent iMongMuon = new Intent(TrangChuActivity.this, MongMuonActivity.class);
                 startActivity(iMongMuon);
                 break;
+            case R.id.itSearch:
+                Intent iTimKiem = new Intent(this, TimKiemActivity.class);
+                startActivity(iTimKiem);
+                break;
 
         }
 
@@ -271,8 +290,32 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if (collapsingToolbarLayout.getHeight() + verticalOffset <= 1.5 * ViewCompat.getMinimumHeight(collapsingToolbarLayout)) {
             linearLayout.animate().alpha(0).setDuration(200);
+            MenuItem itSearch = menu.findItem(R.id.itSearch);
+            itSearch.setVisible(true);
         } else {
             linearLayout.animate().alpha(1).setDuration(200);
+            try {
+                MenuItem itSearch = menu.findItem(R.id.itSearch);
+                itSearch.setVisible(false);
+            } catch (Exception ex) {
+
+            }
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnSearch:
+                Intent iTimKiem = new Intent(this, TimKiemActivity.class);
+                startActivity(iTimKiem);
+                break;
+            case R.id.btnCameraSearch:
+                Intent iTimKiem2 = new Intent(this, TimKiemActivity.class);
+                startActivity(iTimKiem2);
+                break;
         }
     }
 }

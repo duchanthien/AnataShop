@@ -31,4 +31,12 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
             viewGioHang.HienThiDanhSachSanPhamTrongGioHang(sanPhamList);
         }
     }
+
+    @Override
+    public int DemSanPhamTrongGioHang(Context context) {
+        modelGioHang.MoKetNoiSQL(context);
+        int dem = modelGioHang.LayDanhSachSanPhamTrongGioHang().size();
+
+        return dem;
+    }
 }

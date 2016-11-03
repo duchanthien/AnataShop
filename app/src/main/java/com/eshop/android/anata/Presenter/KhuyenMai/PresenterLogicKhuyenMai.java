@@ -23,7 +23,7 @@ public class PresenterLogicKhuyenMai implements IPresenterKhuyenMai {
 
     @Override
     public void LayDanhSachKhuyenMai() {
-        List<KhuyenMai> khuyenMaiList = modelKhuyenMai.LayDanhSachSanPhamTheoMaLoai("LayDanhSachKhuyenMai", "DANHSACHKHUYENMAI");
+        List<KhuyenMai> khuyenMaiList = modelKhuyenMai.LayDanhSachSanPhamTheoKhuyenMai("LayDanhSachKhuyenMai", "DANHSACHKHUYENMAI");
         if (khuyenMaiList.size() > 0) {
             viewKhuyenMai.HienThiDanhSachKhuyenMai(khuyenMaiList);
         }

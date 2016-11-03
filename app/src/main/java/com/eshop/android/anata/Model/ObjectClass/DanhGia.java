@@ -5,24 +5,24 @@ package com.eshop.android.anata.Model.ObjectClass;
  */
 
 public class DanhGia {
-    String MADG, TENTHIETBI, TIEUDE, NOIDUNG, NGAYDANHGIA;
-    int SOSAO, MASP;
+    String  TENNGUOIDANHGIA, TIEUDE, NOIDUNG, NGAYDANHGIA;
+    int SOSAO, MASP,MADG;
 
 
-    public String getMADG() {
+    public int getMADG() {
         return MADG;
     }
 
-    public void setMADG(String MADG) {
+    public void setMADG(int MADG) {
         this.MADG = MADG;
     }
 
-    public String getTENTHIETBI() {
-        return TENTHIETBI;
+    public String getTENNGUOIDANHGIA() {
+        return TENNGUOIDANHGIA;
     }
 
-    public void setTENTHIETBI(String TENTHIETBI) {
-        this.TENTHIETBI = TENTHIETBI;
+    public void setTENNGUOIDANHGIA(String TENNGUOIDANHGIA) {
+        this.TENNGUOIDANHGIA = TENNGUOIDANHGIA;
     }
 
     public String getTIEUDE() {

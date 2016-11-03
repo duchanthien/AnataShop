@@ -8,4 +8,5 @@ import android.content.Context;
 
 public interface IPresenterGioHang {
     void LayDanhSachSanPhamTrongGioHang(Context context);
+    int DemSanPhamTrongGioHang(Context context);
 }

@@ -11,6 +11,18 @@
     <string name="danhgia_activity_name">Tất cả nhận xét</string>
     <string name="danhmuc_activity_name">Danh mục sản phẩm</string>
     <string name="thanhtoan_activity_name">Thanh toán</string>
+    <string name="noidungbaove_chitietsanpham">
+        Sản phẩm theo chính sách Bảo vệ người Mua Hàng 100% như sau:
+        * Đổi trả trong vòng 7 ngày kể từ thời điểm nhận hàng
+        * Đảm bảo việc hoàn tiền
+        * Dịch vụ của Nhà Bán Hàng được xác minh bởi Anata
+    </string>
+    <array name="mang_noidungbaov">
+        <item>Sản phẩm theo chính sách Bảo vệ người Mua Hàng 100% như sau:</item>
+        <item>* Đổi trả trong vòng 7 ngày kể từ thời điểm nhận hàng</item>
+        <item>* Đảm bảo việc hoàn tiền</item>
+        <item>* Dịch vụ của Nhà Bán Hàng được xác minh bởi Anata</item>
 
+    </array>
 
 </resources>

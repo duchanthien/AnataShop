@@ -27,6 +27,7 @@ public class MongMuonActivity extends AppCompatActivity implements ViewMongMuon 
         recyclerMongMuon = (RecyclerView) findViewById(R.id.recyclerMongMuon);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         presenterLogicMongMuon = new PresenterLogicMongMuon(this);
         presenterLogicMongMuon.LayDanhSachSanPhamMongMuon(this);

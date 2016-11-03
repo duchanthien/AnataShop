@@ -26,6 +26,7 @@ public class DangNhapActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarDangNhap);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPagerAdapterDangNhap = new ViewPagerAdapterDangNhap(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapterDangNhap);

@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eshop.android.anata.Adapter.AdapterNoiBat;
+import com.eshop.android.anata.Model.ObjectClass.SanPham;
+import com.eshop.android.anata.Presenter.NoiBat.PresenterLogicNoiBat;
 import com.eshop.android.anata.R;
 
 import java.util.ArrayList;
@@ -19,30 +21,27 @@ import java.util.List;
 /**
  * Created by Han on 31/08/2016.
  */
-public class FragmentNoiBat extends Fragment{
+public class FragmentNoiBat extends Fragment implements ViewNoiBat{
     AdapterNoiBat adapterNoiBat;
     RecyclerView  recyclerView;
+    PresenterLogicNoiBat presenterLogicNoiBat;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_noibat,container,false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.rvNoiBat);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerDanhSachNoiBat);
+        presenterLogicNoiBat = new PresenterLogicNoiBat(this);
+        presenterLogicNoiBat.LayDanhSachNoiBat();
+        return view;
+    }
 
-        List<String> mData = new ArrayList<>();
-
-        for(int i = 0 ; i < 50;i++){
-            String name = "Noi bat "+i;
-            mData.add(name);
-        }
-
-        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
-
+    @Override
+    public void HienThiDanhSachSanPhamNoiBat(List<SanPham> list) {
+        adapterNoiBat = new AdapterNoiBat(getContext(),list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapterNoiBat = new AdapterNoiBat(getActivity(),mData);
-
         recyclerView.setAdapter(adapterNoiBat);
         adapterNoiBat.notifyDataSetChanged();
-        return view;
+
     }
 }
