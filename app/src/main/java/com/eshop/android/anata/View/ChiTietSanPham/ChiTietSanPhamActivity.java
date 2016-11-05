@@ -94,7 +94,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
     boolean onPause = false;
     public static boolean kiemtraMongMuon = false;
 
-    Button btnMuaNgay, btnBaoVeNguoiMuahang;
+    Button btnMuaNgay, btnBaoVeNguoiMuahang,btnDamBaoSuHaiLong;
     String tennguoidung = "";
     AccessToken accessToken;
     Menu menu;
@@ -126,6 +126,8 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
         toolbar = (Toolbar) findViewById(R.id.toolbar_chitiet);
         btnMuaNgay = (Button) findViewById(R.id.btnMuaNgay);
         btnBaoVeNguoiMuahang = (Button) findViewById(R.id.btnBaoVeNguoiMuaHang);
+        btnDamBaoSuHaiLong = (Button) findViewById(R.id.btnDamBaoSuHaiLong);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -150,6 +152,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
         imgChiaSe.setOnClickListener(this);
         btnMuaNgay.setOnClickListener(this);
         btnBaoVeNguoiMuahang.setOnClickListener(this);
+        btnDamBaoSuHaiLong.setOnClickListener(this);
 
 
     }
@@ -408,19 +411,22 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
             case R.id.txtXemTatCaNhanXet:
                 Intent iDanhSachDanhGia = new Intent(ChiTietSanPhamActivity.this, DanhSachDanhGiaActivity.class);
                 iDanhSachDanhGia.putExtra("masp", masp);
-
                 startActivity(iDanhSachDanhGia);
                 break;
             case R.id.imgThemGioHang:
-                fragment = fragments.get(0);
-                view = fragment.getView();
-                imageView = (ImageView) view.findViewById(R.id.imgSlider);
-                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                try {
+                    fragment = fragments.get(0);
+                    view = fragment.getView();
+                    imageView = (ImageView) view.findViewById(R.id.imgSlider);
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
 
-                sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
+                    sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
+                } catch (Exception e) {
+
+                }
                 sanPhamGioHang.setSOLUONG(1);
                 presenterLogicChiTietSanPham.ThemGioHang(sanPhamGioHang, this);
                 txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
@@ -429,15 +435,19 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
             case R.id.imgMongMuon:
                 kiemtraMongMuon = !kiemtraMongMuon;
                 if (kiemtraMongMuon) {
-                    fragment = fragments.get(0);
-                    view = fragment.getView();
-                    imageView = (ImageView) view.findViewById(R.id.imgSlider);
-                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    try {
+                        fragment = fragments.get(0);
+                        view = fragment.getView();
+                        imageView = (ImageView) view.findViewById(R.id.imgSlider);
+                        bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                    byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] hinhsanphamgiohang1 = byteArrayOutputStream.toByteArray();
-                    sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang1);
+                        byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] hinhsanphamgiohang1 = byteArrayOutputStream.toByteArray();
+                        sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang1);
+                    } catch (Exception ex) {
+
+                    }
                     presenterLogicChiTietSanPham.ThemMongMuon(sanPhamGioHang, this);
                     imgThemMongMuon.setImageDrawable(getHinhChiTiet(R.drawable.ic_favorite_black_24dp));
                 } else {
@@ -491,28 +501,37 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
                 }
                 break;
             case R.id.btnBaoVeNguoiMuaHang:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Bảo vệ người mua hàng");
-                View viewDialog = getLayoutInflater().inflate(R.layout.custom_dialog_chitietsanpham, null, false);
-                builder.setView(viewDialog);
-                TextView txtNoidung = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe);
-                TextView txtNoidung1 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe2);
-                TextView txtNoidung2 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe3);
-                TextView txtNoidung3 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe4);
-                String[] mangNoidung = getResources().getStringArray(R.array.mang_noidungbaov);
-                txtNoidung.setText(mangNoidung[0]);
-                txtNoidung1.setText(mangNoidung[1]);
-                txtNoidung2.setText(mangNoidung[2]);
-                txtNoidung3.setText(mangNoidung[3]);
-                builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
+                String[] mangNoidungBaoVe = getResources().getStringArray(R.array.mang_noidungbaov);
+                setTextDamBao(mangNoidungBaoVe,"Bảo Vệ Người Mua Hàng");
+                break;
+            case R.id.btnDamBaoSuHaiLong:
+                String[] mangNoidung = getResources().getStringArray(R.array.mang_noidungDB);
+                setTextDamBao(mangNoidung,"Đảm Bảo Sự Hài Lòng");
                 break;
         }
+    }
+
+    private void setTextDamBao(String[] mangNoidung,String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        View viewDialog = getLayoutInflater().inflate(R.layout.custom_dialog_chitietsanpham, null, false);
+        builder.setView(viewDialog);
+        TextView txtNoidung = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe);
+        TextView txtNoidung1 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe2);
+        TextView txtNoidung2 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe3);
+        TextView txtNoidung3 = (TextView) viewDialog.findViewById(R.id.txtNoiDungBaoVe4);
+        txtNoidung.setText(mangNoidung[0]);
+        txtNoidung1.setText(mangNoidung[1]);
+        txtNoidung2.setText(mangNoidung[2]);
+        txtNoidung3.setText(mangNoidung[3]);
+        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
     }
 
     @Override

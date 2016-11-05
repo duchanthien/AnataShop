@@ -25,7 +25,7 @@ public class ModelTimKiem {
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String dataJSON = "";
 
-        String đuongan = TrangChuActivity.SERVER_NAME;
+        String duongdan = TrangChuActivity.SERVER_NAME;
 
         HashMap<String, String> hsHam = new HashMap<>();
         hsHam.put("ham", tenham);
@@ -40,7 +40,7 @@ public class ModelTimKiem {
         attrs.add(hsTenSP);
         attrs.add(hsLimit);
 
-        DownloadJSON downloadJSON = new DownloadJSON(đuongan, attrs);
+        DownloadJSON downloadJSON = new DownloadJSON(duongdan, attrs);
         // Add Phương thức post
         downloadJSON.execute();
 
@@ -56,7 +56,7 @@ public class ModelTimKiem {
                 sanPham.setTENSP(object.getString("TENSP"));
                 sanPham.setGIA(object.getInt("GIATIEN"));
                 sanPham.setHINHLON(TrangChuActivity.SERVER+object.getString("HINHSANPHAM"));
-                sanPham.setHINHNHO(object.getString("HINHSANPHAMNHO"));
+                sanPham.setHINHNHO(TrangChuActivity.SERVER+object.getString("HINHSANPHAMNHO"));
 
                 ChiTietKhuyenMai chiTietKhuyenMai = new ChiTietKhuyenMai();
                 chiTietKhuyenMai.setPHANTRAMKM(object.getInt("PHANTRAMKM"));

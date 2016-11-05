@@ -1,6 +1,7 @@
 package com.eshop.android.anata.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +23,11 @@ import com.eshop.android.anata.Model.GioHang_MongMuon.ModelGioHang;
 import com.eshop.android.anata.Model.GioHang_MongMuon.ModelMongMuon;
 import com.eshop.android.anata.Model.ObjectClass.ChiTietKhuyenMai;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
+import com.eshop.android.anata.Presenter.GioHang.PresenterLogicGioHang;
 import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.ChiTietSanPham.ChiTietSanPhamActivity;
+import com.eshop.android.anata.View.GioHang.GioHangActivity;
+import com.eshop.android.anata.View.GioHang.ViewGioHang;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
@@ -43,6 +48,7 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] hinhsanphamgiohang;
     ModelMongMuon modelMongMuon;
+    int giatien;
 
     public AdapterGioHang(Context context, List<SanPham> sanPhamList) {
         this.context = context;
@@ -52,6 +58,8 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
         modelMongMuon = new ModelMongMuon();
         modelMongMuon.MoKetNetSQL(context);
     }
+
+
 
     public class ViewHolderGioHang extends RecyclerView.ViewHolder {
 
@@ -92,7 +100,7 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
         ChiTietKhuyenMai chiTietKhuyenMai = sanPham.getChiTietKhuyenMai();
 
 
-        int giatien = sanPham.getGIA();
+        giatien = sanPham.getGIA();
 
         if (chiTietKhuyenMai != null) {
             int phamtramkm = chiTietKhuyenMai.getPHANTRAMKM();
@@ -136,12 +144,18 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
 
                 if (soluong < soluongtonkho) {
                     soluong++;
+
                 } else {
                     Toast.makeText(context, "Số lượng sản phẩm bạn mua quá số lượng có trong cưa hàng", Toast.LENGTH_SHORT).show();
                 }
 
                 modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
+                modelGioHang.LayDanhSachSanPhamTrongGioHang();
                 holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
+                Intent refresh = new Intent(context, GioHangActivity.class);
+                context.startActivity(refresh);
+                ((AppCompatActivity)context).finish();
+
 
             }
         });
@@ -154,14 +168,18 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
                     soluong--;
                 }
                 modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
+                modelGioHang.LayDanhSachSanPhamTrongGioHang();
                 holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
+                Intent refresh = new Intent(context, GioHangActivity.class);
+                context.startActivity(refresh);
+                ((AppCompatActivity)context).finish();
 
             }
         });
         modelMongMuon.LayDanhSachSanPhamMongMuon();
-        if(ChiTietSanPhamActivity.kiemtraMongMuon){
+        if (ChiTietSanPhamActivity.kiemtraMongMuon) {
             holder.imgThemMongMuon.setImageDrawable(getHinhChiTiet(R.drawable.ic_favorite_black_24dp));
-        }else {
+        } else {
             holder.imgThemMongMuon.setImageDrawable(getHinhChiTiet(R.drawable.ic_favorite_border_black_24dp));
         }
         holder.imgThemMongMuon.setOnClickListener(new View.OnClickListener() {

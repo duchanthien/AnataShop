@@ -57,8 +57,7 @@ public class ThemDanhGiaActivity extends AppCompatActivity implements RatingBar.
     public void DanhGiaThanhCong() {
         finish();
         Toast.makeText(this, "Thêm đánh giá thành công", Toast.LENGTH_SHORT).show();
-
-
+        presenterLogicThemDanhGia.LayDanhSachDanhGiaSanPham(masp,0);
     }
 
     @Override

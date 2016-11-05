@@ -70,6 +70,7 @@ public class ModelGioHang {
 
     }
 
+
     public boolean CapNhatSoLuongSanPhamGioHang(int masp, int soluong) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseSanPham.TB_GIOHANG_SOLUONG, soluong);

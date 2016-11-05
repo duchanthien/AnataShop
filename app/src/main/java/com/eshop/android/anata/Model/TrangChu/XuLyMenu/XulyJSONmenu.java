@@ -22,7 +22,6 @@ import java.util.concurrent.ExecutionException;
  * Created by Han on 31/08/2016.
  */
 public class XulyJSONmenu {
-    String tennguoidung;
     public List<LoaiSanPham> ParserJSONMenu(String dulieujson) {
         List<LoaiSanPham> loaiSanPhams = new ArrayList<>();
 
@@ -56,7 +55,6 @@ public class XulyJSONmenu {
 
         HashMap<String, String> hsMaloaiCha = new HashMap<>();
         hsMaloaiCha.put("maloaicha", String.valueOf(maloaisp));
-
 
         attrs.add(hsMaloaiCha);
         attrs.add(HSham);

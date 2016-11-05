@@ -1,6 +1,9 @@
 package com.eshop.android.anata.View.TrangChu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.AppBarLayout.OnOffsetChangedListener;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +13,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -85,6 +89,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     boolean onPause = false;
     Button btnSearch;
     ImageButton btnCameraSearch;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +145,11 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_trangchu, menu);
         this.menu = menu;
@@ -191,10 +201,10 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
         PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
         int dem = presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this);
         txtGioHang.setText("");
-        if(dem > 0){
+        if (dem > 0) {
             txtGioHang.setText(String.valueOf(dem));
             txtGioHang.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             txtGioHang.setVisibility(View.INVISIBLE);
         }
 
@@ -241,22 +251,36 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                 }
                 break;
             case R.id.itDangXuat:
-                if (accessToken != null) {
-                    LoginManager.getInstance().logOut();
-                    this.menu.clear();
-                    this.onCreateOptionsMenu(this.menu);
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Bạn có chắc là muốn đăng xuất");
+                builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (accessToken != null) {
+                            LoginManager.getInstance().logOut();
+                            TrangChuActivity.this.menu.clear();
+                            TrangChuActivity.this.onCreateOptionsMenu(TrangChuActivity.this.menu);
+                        }
 
-                if (googleSignInResult != null) {
-                    Auth.GoogleSignInApi.signOut(googleApiClient);
-                    this.menu.clear();
-                    this.onCreateOptionsMenu(this.menu);
-                }
-                if (!modelDangNhap.LayCachedDangNhap(TrangChuActivity.this).equals("")) {
-                    modelDangNhap.CapNhatCachedDangNhap(TrangChuActivity.this, "");
-                    this.menu.clear();
-                    this.onCreateOptionsMenu(this.menu);
-                }
+                        if (googleSignInResult != null) {
+                            Auth.GoogleSignInApi.signOut(googleApiClient);
+                            TrangChuActivity.this.menu.clear();
+                            TrangChuActivity.this.onCreateOptionsMenu(TrangChuActivity.this.menu);
+                        }
+                        if (!modelDangNhap.LayCachedDangNhap(TrangChuActivity.this).equals("")) {
+                            modelDangNhap.CapNhatCachedDangNhap(TrangChuActivity.this, "");
+                            TrangChuActivity.this.menu.clear();
+                            TrangChuActivity.this.onCreateOptionsMenu(TrangChuActivity.this.menu);
+                        }
+                    }
+                });
+                builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                    }
+                });
+                builder.show();
                 break;
             case R.id.itMongMuon:
                 Intent iMongMuon = new Intent(TrangChuActivity.this, MongMuonActivity.class);
@@ -313,9 +337,20 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
                 startActivity(iTimKiem);
                 break;
             case R.id.btnCameraSearch:
-                Intent iTimKiem2 = new Intent(this, TimKiemActivity.class);
-                startActivity(iTimKiem2);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(takePictureIntent.resolveActivity(getPackageManager())!= null){
+                    startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
+                }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+           //mImageView.setImageBitmap(imageBitmap);
         }
     }
 }

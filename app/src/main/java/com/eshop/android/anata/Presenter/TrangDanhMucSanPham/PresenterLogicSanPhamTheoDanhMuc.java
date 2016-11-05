@@ -44,6 +44,8 @@ public class PresenterLogicSanPhamTheoDanhMuc implements IPresenterSanPhamTheoDa
         }
     }
 
+
+
     public List<SanPham> LayDanhSachSanPhamTheoMaLoaiLoadMore(int masp, boolean kiemtra, int limit, ProgressBar progressBar) {
         progressBar.setVisibility(View.VISIBLE);
         List<SanPham> sanPhamList = new ArrayList<>();

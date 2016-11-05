@@ -56,8 +56,8 @@ public class ModelSanPhamTheoDanhMuc {
                 sanPham.setMASP(object.getInt("MASP"));
                 sanPham.setTENSP(object.getString("TENSP"));
                 sanPham.setGIA(object.getInt("GIATIEN"));
-                sanPham.setHINHLON(object.getString("HINHSANPHAM"));
-                sanPham.setHINHNHO(object.getString("HINHSANPHAMNHO"));
+                sanPham.setHINHLON(TrangChuActivity.SERVER+object.getString("HINHSANPHAM"));
+                sanPham.setHINHNHO(TrangChuActivity.SERVER+object.getString("HINHSANPHAMNHO"));
                 sanPhamList.add(sanPham);
             }
         } catch (InterruptedException e) {

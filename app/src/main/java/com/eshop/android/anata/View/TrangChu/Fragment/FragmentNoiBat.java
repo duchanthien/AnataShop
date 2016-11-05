@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.eshop.android.anata.Adapter.AdapterNoiBat;
+import com.eshop.android.anata.Model.ObjectClass.NoiBat;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.Presenter.NoiBat.PresenterLogicNoiBat;
 import com.eshop.android.anata.R;
@@ -36,7 +37,7 @@ public class FragmentNoiBat extends Fragment implements ViewNoiBat{
     }
 
     @Override
-    public void HienThiDanhSachSanPhamNoiBat(List<SanPham> list) {
+    public void HienThiDanhSachSanPhamNoiBat(List<NoiBat> list) {
         adapterNoiBat = new AdapterNoiBat(getContext(),list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

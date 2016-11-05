@@ -6,23 +6,35 @@
     <string name="facebook_app_id">331481703858471</string>
     <string name="google_plus_id">688290473907-cm7jmuho8o1ctdo1tekoj9jk6kv6nrn2.apps.googleusercontent.com </string>
     <string name="chitietsanpham_activity_name">Chi tiết sản phẩm</string>
-    <string name="giohang_activity_name">Giỏ hàng</string>
-    <string name="mongmuon_activity_name">Yêu thích</string>
+    <string name="giohang_activity_name">Giỏ hàng của tôi</string>
+    <string name="mongmuon_activity_name">Sản phẩm mong muốn</string>
     <string name="danhgia_activity_name">Tất cả nhận xét</string>
     <string name="danhmuc_activity_name">Danh mục sản phẩm</string>
     <string name="thanhtoan_activity_name">Thanh toán</string>
-    <string name="noidungbaove_chitietsanpham">
-        Sản phẩm theo chính sách Bảo vệ người Mua Hàng 100% như sau:
-        * Đổi trả trong vòng 7 ngày kể từ thời điểm nhận hàng
-        * Đảm bảo việc hoàn tiền
-        * Dịch vụ của Nhà Bán Hàng được xác minh bởi Anata
-    </string>
+
     <array name="mang_noidungbaov">
         <item>Sản phẩm theo chính sách Bảo vệ người Mua Hàng 100% như sau:</item>
         <item>* Đổi trả trong vòng 7 ngày kể từ thời điểm nhận hàng</item>
         <item>* Đảm bảo việc hoàn tiền</item>
         <item>* Dịch vụ của Nhà Bán Hàng được xác minh bởi Anata</item>
 
+    </array>
+    <array name="mang_noidungDB">
+        <item>Sản phẩm theo chính sách Đảm Bảo Sự Hài Lòng 100% như sau:</item>
+        <item>* Đổi trả trong vòng 14 ngày kể từ thời điểm nhận hàng</item>
+        <item>* Đảm bảo việc hoàn tiền</item>
+        <item>* Dịch vụ của Nhà Bán Hàng được xác minh bởi Anata</item>
+        <item>* Đổi trả khi không ưng ý</item>
+
+
+    </array>
+    <array name="kieusapxep">
+        <item>Phổ biến nhất</item>
+        <item>Giá thấp đến cao</item>
+        <item>Giá cao đến thấp</item>
+        <item>Thời gian giao hàng</item>
+        <item>Tên sản phẩm</item>
+        <item>Thương hiệu</item>
     </array>
 
 </resources>

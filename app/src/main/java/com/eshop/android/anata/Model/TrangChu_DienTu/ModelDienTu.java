@@ -23,19 +23,19 @@ import java.util.concurrent.ExecutionException;
 public class ModelDienTu {
 
 
-    public List<SanPham> LayDanhSachSanPhamTop(String tenham,String tenmang) {
+    public List<SanPham> LayDanhSachSanPhamTop(String tenham, String tenmang) {
         List<SanPham> sanPhamList = new ArrayList<>();
 
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String dataJSON = "";
 
-        String đuongan = TrangChuActivity.SERVER_NAME;
+        String duongdan = TrangChuActivity.SERVER_NAME;
 
         HashMap<String, String> hsHam = new HashMap<>();
         hsHam.put("ham", tenham);
         attrs.add(hsHam);
 
-        DownloadJSON downloadJSON = new DownloadJSON(đuongan, attrs);
+        DownloadJSON downloadJSON = new DownloadJSON(duongdan, attrs);
         downloadJSON.execute();
 
         try {
@@ -47,12 +47,12 @@ public class ModelDienTu {
                 SanPham sanPham = new SanPham();
                 ChiTietKhuyenMai chiTietKhuyenMai = new ChiTietKhuyenMai();
                 JSONObject object = jsonArrayDanhSachSanPham.getJSONObject(i);
-                chiTietKhuyenMai.setPHANTRAMKM(object.getInt("PHANTRAMKM"));
+                //chiTietKhuyenMai.setPHANTRAMKM(object.getInt("PHANTRAMKM"));
                 sanPham.setMASP(object.getInt("MASP"));
                 sanPham.setTENSP(object.getString("TENSP"));
                 sanPham.setGIA(object.getInt("GIATIEN"));
                 sanPham.setChiTietKhuyenMai(chiTietKhuyenMai);
-                sanPham.setHINHLON(object.getString("HINHSANPHAM"));
+                sanPham.setHINHLON(TrangChuActivity.SERVER + object.getString("HINHSANPHAM"));
                 sanPhamList.add(sanPham);
             }
         } catch (InterruptedException e) {
@@ -66,7 +66,7 @@ public class ModelDienTu {
         return sanPhamList;
     }
 
-    public List<ThuongHieu> LayDanhSachThuongHieuLon(String tenham,String tenmang) {
+    public List<ThuongHieu> LayDanhSachThuongHieuLon(String tenham, String tenmang) {
         List<ThuongHieu> thuongHieuList = new ArrayList<>();
 
         List<HashMap<String, String>> attrs = new ArrayList<>();
@@ -84,6 +84,7 @@ public class ModelDienTu {
 
         try {
             dataJSON = downloadJSON.get();
+            //Log.d("thuonghieu",dataJSON.toString());
             JSONObject jsonObject = new JSONObject(dataJSON);
             JSONArray jsonArrayThuongHieuLon = jsonObject.getJSONArray(tenmang);
             int count = jsonArrayThuongHieuLon.length();
@@ -93,8 +94,8 @@ public class ModelDienTu {
 
                 thuongHieu.setMATH(object.getInt("MASP"));
                 thuongHieu.setTENTH(object.getString("TENSP"));
-                thuongHieu.setHINHTH(object.getString("HINHSANPHAM"));
-
+                thuongHieu.setHINHTH(TrangChuActivity.SERVER + object.getString("HINHSANPHAM"));
+                Log.d("dd",thuongHieu.getHINHTH()+"");
                 thuongHieuList.add(thuongHieu);
                 // Log.d("kiemtra",thuongHieu.getTENTH()+"");
             }
@@ -109,7 +110,6 @@ public class ModelDienTu {
 
         return thuongHieuList;
     }
-
 
 
 }

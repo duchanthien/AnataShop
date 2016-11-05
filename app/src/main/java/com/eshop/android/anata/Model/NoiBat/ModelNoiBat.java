@@ -1,6 +1,9 @@
 package com.eshop.android.anata.Model.NoiBat;
 
+import android.util.Log;
+
 import com.eshop.android.anata.ConnectInternet.DownloadJSON;
+import com.eshop.android.anata.Model.ObjectClass.NoiBat;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
 
@@ -18,8 +21,8 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class ModelNoiBat {
-    public List<SanPham> LayDanhSachSanPhamTheoLuotMua(String tenham, String tenmang) {
-        List<SanPham> sanPhamList = new ArrayList<>();
+    public List<NoiBat> LayDanhSachSanPhamTheoLuotMua(String tenham, String tenmang) {
+        List<NoiBat> noiBatList = new ArrayList<>();
 
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String dataJSON = "";
@@ -39,17 +42,33 @@ public class ModelNoiBat {
             dataJSON = downloadJSON.get();
             JSONObject jsonObject = new JSONObject(dataJSON);
             JSONArray jsonArrayDanhSachSanPham = jsonObject.getJSONArray(tenmang);
+            //Log.d("kiemtra",dataJSON.toString());
             int count = jsonArrayDanhSachSanPham.length();
             for (int i = 0; i < count; i++) {
-                SanPham sanPham = new SanPham();
                 JSONObject object = jsonArrayDanhSachSanPham.getJSONObject(i);
-                sanPham.setMASP(object.getInt("MASP"));
-                sanPham.setTENSP(object.getString("TENSP"));
-                sanPham.setGIA(object.getInt("GIA"));
-                sanPham.setHINHLON(object.getString("ANHLON"));
-                sanPham.setHINHNHO(object.getString("ANHNHO"));
-                sanPhamList.add(sanPham);
+                NoiBat noiBat = new NoiBat();
+                noiBat.setTENLOAISP(object.getString("TENLOAISP"));
+
+                JSONArray arrayDanhSachSanPhamNoiBat = object.getJSONArray("DANHSACHSANPHAMNOIBAT");
+                int dem = arrayDanhSachSanPhamNoiBat.length();
+                List<SanPham> sanPhamList = new ArrayList<>();
+                for (int j = 0; j < dem; j++) {
+
+                    JSONObject objectSanPhamList = arrayDanhSachSanPhamNoiBat.getJSONObject(j);
+                    SanPham sanPham = new SanPham();
+                    sanPham.setMASP(objectSanPhamList.getInt("MASP"));
+                    sanPham.setTENSP(objectSanPhamList.getString("TENSP"));
+                    sanPham.setGIA(objectSanPhamList.getInt("GIA"));
+                    sanPham.setHINHLON(TrangChuActivity.SERVER + objectSanPhamList.getString("ANHLON"));
+                    sanPham.setHINHNHO(TrangChuActivity.SERVER + objectSanPhamList.getString("ANHNHO"));
+                    //Log.d("sanpham",sanPham.getTENSP());
+                    sanPhamList.add(sanPham);
+                }
+                //Log.d("kiemtra",sanPhamList.get(0).getMASP()+"");
+                noiBat.setSanPhamsNoiBat(sanPhamList);
+                noiBatList.add(noiBat);
             }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -58,7 +77,7 @@ public class ModelNoiBat {
             e.printStackTrace();
         }
 
-        return sanPhamList;
+        return noiBatList;
     }
 
 }

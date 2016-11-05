@@ -30,7 +30,7 @@ public class ModelChiTietSanPham {
         List<HashMap<String, String>> attrs = new ArrayList<>();
         String dataJSON = "";
 
-        String đuongan = TrangChuActivity.SERVER_NAME;
+        String duongdan = TrangChuActivity.SERVER_NAME;
 
         HashMap<String, String> hsHam = new HashMap<>();
         hsHam.put("ham", "LayDanhSachDanhGiaTheoMASP");
@@ -45,7 +45,7 @@ public class ModelChiTietSanPham {
         attrs.add(hsMaSP);
         attrs.add(hsLimit);
 
-        DownloadJSON downloadJSON = new DownloadJSON(đuongan, attrs);
+        DownloadJSON downloadJSON = new DownloadJSON(duongdan, attrs);
         // Add Phương thức post
         downloadJSON.execute();
 

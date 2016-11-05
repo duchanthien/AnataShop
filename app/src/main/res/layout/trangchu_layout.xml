@@ -43,8 +43,8 @@
                         android:id="@+id/lnSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="?attr/actionBarSize"
                         android:background="@drawable/bgsearch"
                         android:orientation="horizontal"
@@ -57,21 +57,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/selectorbgsearch"
                             android:drawableLeft="@drawable/ic_search_black_24dp"
                             android:text="Tìm kiếm trên Anata"
                             android:textAlignment="viewStart"
                             android:textAllCaps="false"
-                            android:textColor="@color/grey" />
+                            android:textSize="12sp"
+                            android:textColor="@color/secondaryText" />
 
                         <View
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/bgToolbar" />
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/secondaryText" />
 
                         <ImageButton
                             android:id="@+id/btnCameraSearch"

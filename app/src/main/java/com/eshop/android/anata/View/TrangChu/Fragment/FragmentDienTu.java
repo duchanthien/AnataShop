@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         Random random = new Random();
 
         int vitri = random.nextInt(sanPhams.size());
+
         Picasso.with(getContext()).load(sanPhams.get(vitri).getHINHLON()).fit().centerInside().into(imgSanPham1);
         txtSanPham1.setText(sanPhams.get(vitri).getTENSP()+"");
 
@@ -117,6 +119,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         int vitri3 = random.nextInt(sanPhams.size());
         Picasso.with(getContext()).load(sanPhams.get(vitri3).getHINHLON()).fit().centerInside().into(imgSanPham3);
         txtSanPham3.setText(sanPhams.get(vitri3).getTENSP()+"");
+        Log.d("kiemtra",sanPhams.get(vitri3).getTENSP());
 
     }
 }

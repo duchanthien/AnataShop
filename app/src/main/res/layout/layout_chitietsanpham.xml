@@ -125,6 +125,7 @@
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:drawableLeft="@drawable/security_shield_n"
+                        android:textAlignment="textStart"
                         android:text="Bảo vệ người mua hàng 100%"
                         android:textColor="@color/bgToolbar"
                         android:textSize="14sp" />
@@ -135,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/white"
+                        android:textAlignment="textStart"
                         android:drawableLeft="@drawable/security_check"
                         android:text="Đảm bảo sự hài lòng"
                         android:textColor="@color/green"
@@ -315,6 +317,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/txtGiaTien"
                         android:layout_width="wrap_content"
@@ -329,13 +332,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100000 VNĐ "
-                        android:visibility="gone"
                         android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
-
-
 
 
                 <RatingBar

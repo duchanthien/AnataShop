@@ -1,6 +1,7 @@
 package com.eshop.android.anata.Presenter.GioHang;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import com.eshop.android.anata.Model.GioHang_MongMuon.ModelGioHang;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
@@ -38,5 +39,24 @@ public class PresenterLogicGioHang implements IPresenterGioHang {
         int dem = modelGioHang.LayDanhSachSanPhamTrongGioHang().size();
 
         return dem;
+    }
+
+    @Override
+    public void LayTongTienTrongGioHang(Context context) {
+        modelGioHang.MoKetNoiSQL(context);
+        int tongtien, soluong = 0, gia = 0;
+        List<SanPham> sanPhamList = modelGioHang.LayDanhSachSanPhamTrongGioHang();
+        if (sanPhamList.size() > 0) {
+            for (int i = 0; i < sanPhamList.size(); i++) {
+                soluong += sanPhamList.get(i).getSOLUONG();
+                gia = sanPhamList.get(i).getGIA();
+            }
+            tongtien = (soluong * gia);
+            viewGioHang.HienThiTongTienTrongGioHang(tongtien);
+
+        }
+
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.eshop.android.anata.Presenter.NoiBat;
 
 import com.eshop.android.anata.Model.NoiBat.ModelNoiBat;
+import com.eshop.android.anata.Model.ObjectClass.NoiBat;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.View.TrangChu.Fragment.ViewNoiBat;
 
@@ -22,9 +23,9 @@ public class PresenterLogicNoiBat implements IPresenterNoiBat {
 
     @Override
     public void LayDanhSachNoiBat() {
-        List<SanPham> sanPhamList = modelNoiBat.LayDanhSachSanPhamTheoLuotMua("LayDanhSachSanPhamNoiBat", "DANHSACHNOIBAT");
-        if (sanPhamList.size() > 0) {
-            viewNoiBat.HienThiDanhSachSanPhamNoiBat(sanPhamList);
+        List<NoiBat> noiBatList = modelNoiBat.LayDanhSachSanPhamTheoLuotMua("LayDanhSachSanPhamNoiBat", "DANHSACHNOIBAT");
+        if (noiBatList.size() > 0) {
+            viewNoiBat.HienThiDanhSachSanPhamNoiBat(noiBatList);
         }
 
     }

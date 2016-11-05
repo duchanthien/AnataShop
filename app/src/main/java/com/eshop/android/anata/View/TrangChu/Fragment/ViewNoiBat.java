@@ -1,5 +1,6 @@
 package com.eshop.android.anata.View.TrangChu.Fragment;
 
+import com.eshop.android.anata.Model.ObjectClass.NoiBat;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 
 import java.util.List;
@@ -9,5 +10,5 @@ import java.util.List;
  */
 
 public interface ViewNoiBat {
-    void HienThiDanhSachSanPhamNoiBat(List<SanPham> list);
+    void HienThiDanhSachSanPhamNoiBat(List<NoiBat> list);
 }

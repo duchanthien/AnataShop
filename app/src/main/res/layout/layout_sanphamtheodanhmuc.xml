@@ -11,16 +11,17 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-.
+        .
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarDanhMuc"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="parallax"
-            app:titleTextColor="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
             app:theme="@style/menuitemcolor"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:titleTextColor="@color/white">
 
         </android.support.v7.widget.Toolbar>
 
@@ -46,6 +47,7 @@
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:text="Lọc"
+                    android:textAllCaps="false"
                     android:textColor="@color/primaryText" />
             </FrameLayout>
 
@@ -64,6 +66,7 @@
                     android:background="@color/white"
                     android:drawableLeft="@drawable/ic_swap_vert_black_24dp"
                     android:text="Sắp xếp"
+                    android:textAllCaps="false"
                     android:textColor="@color/primaryText" />
             </FrameLayout>
 
@@ -73,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/bgToolbar" />
+                android:background="@color/grey" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -87,7 +90,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
-                    android:drawableLeft="@drawable/ic_view_list_black_24dp" />
+                    android:drawableLeft="@drawable/ic_view_list_black_24dp"
+                    android:paddingLeft="8dp" />
             </FrameLayout>
 
 
@@ -96,17 +100,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightgrey"
         android:orientation="vertical"
-        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcv_sanphamtheodanhmuc"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_marginBottom="8dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -118,8 +121,8 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
-            android:indeterminate="true" />
+            android:indeterminate="true"
+            android:visibility="gone" />
 
     </LinearLayout>
 

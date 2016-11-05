@@ -1,10 +1,15 @@
 package com.eshop.android.anata.View.TrangDanhMucSanPham;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,7 +42,7 @@ import java.util.List;
 public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiSanPhamTheoDanhMuc, OnClickListener, ILoadMore {
 
     RecyclerView recyclerView;
-    Button btnThayDoiRecyclerView;
+    Button btnThayDoiRecyclerView, btnSapXep, btnLoc;
     boolean dangGrid = true;
     RecyclerView.LayoutManager layoutManager;
     int masp;
@@ -48,6 +54,7 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
     List<SanPham> sanPhams;
     ProgressBar progressBar;
     TextView txtGioHang;
+    int KieuSapXepDuocChon = 0;
 
     @Nullable
     @Override
@@ -56,6 +63,8 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
         setHasOptionsMenu(false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rcv_sanphamtheodanhmuc);
         btnThayDoiRecyclerView = (Button) view.findViewById(R.id.btnThayDoiRecyclerView);
+        btnLoc = (Button) view.findViewById(R.id.btnLocDanhMuc);
+        btnSapXep = (Button) view.findViewById(R.id.btnDanhMucSapXep);
         toolbar = (Toolbar) view.findViewById(R.id.toolbarDanhMuc);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
@@ -68,6 +77,8 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
         sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, kiemtra);
 
         btnThayDoiRecyclerView.setOnClickListener(this);
+        btnSapXep.setOnClickListener(this);
+        btnLoc.setOnClickListener(this);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,11 +93,15 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
         return view;
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         inflater.inflate(R.menu.menu_trangchu, menu);
+
+        MenuItem iTimKiem = menu.findItem(R.id.itSearch);
+        iTimKiem.setVisible(true);
+
         MenuItem iGioHang = menu.findItem(R.id.itGiohang);
         View giaoDienCustomGioHang = MenuItemCompat.getActionView(iGioHang);
         txtGioHang = (TextView) giaoDienCustomGioHang.findViewById(R.id.txtSoluongSanPhamGioHang);
@@ -107,9 +122,6 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
                 startActivity(iGioHang);
             }
         });
-        MenuItem iTimKiem = menu.findItem(R.id.itSearch);
-        iTimKiem.setVisible(true);
-
 
     }
 
@@ -130,7 +142,7 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
         this.sanPhams = sanPhamList;
         if (dangGrid) {
             layoutManager = new GridLayoutManager(getContext(), 2);
-            adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_topdienthoaimaytinhbang, sanPhams);
+            adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_danhmuc_topdienthoaimaytinhbang, sanPhams);
         } else {
             layoutManager = new LinearLayoutManager(getContext());
             adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_list_topdienthoaivamaytinhbang, sanPhams);
@@ -153,8 +165,38 @@ public class SanPhamTheoDanhMucFragment extends Fragment implements ViewHienThiS
             case R.id.btnThayDoiRecyclerView:
                 dangGrid = !dangGrid;
                 sanPhamTheoDanhMuc.LayDanhSachSanPhamTheoMaLoai(masp, kiemtra);
-                ;
                 break;
+            case R.id.btnLocDanhMuc:
+
+                break;
+            case R.id.btnDanhMucSapXep:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final String seq[] = getActivity().getResources().getStringArray(R.array.kieusapxep);
+                int index = 0;
+                builder.setTitle("Sắp xếp theo:");
+                builder.setSingleChoiceItems(seq, index, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        KieuSapXepDuocChon = which;
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
+
         }
     }
 

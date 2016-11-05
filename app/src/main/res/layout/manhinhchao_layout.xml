@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:paddingTop="20dp"
 
-            android:src="@drawable/iconbag" />
+            android:src="@drawable/iconmoney" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="20dp"
-            android:src="@drawable/iconbag" />
+            android:src="@drawable/iconsercurity" />
 
         <TextView
             android:layout_width="wrap_content"

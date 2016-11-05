@@ -19,7 +19,9 @@ import java.util.concurrent.ExecutionException;
 public class PresenterLogicXuLyMenu implements IPresenterXuLyMenu {
 
     ViewXuLyMenu viewXuLyMenu;
+    public  PresenterLogicXuLyMenu(){
 
+    }
     public PresenterLogicXuLyMenu(ViewXuLyMenu viewXuLyMenu) {
         this.viewXuLyMenu = viewXuLyMenu;
     }

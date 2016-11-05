@@ -116,9 +116,9 @@ public class ModelDanhGia {
 
         try {
             String dulieuJSON = downloadJSON.get();
+            Log.d("kiemtra",dulieuJSON.toString());
             JSONObject jsonObject = new JSONObject(dulieuJSON);
             String ketqua = jsonObject.getString("ketqua");
-            Log.d("kiemtra",ketqua);
             if(ketqua.equals("true")){
                 kiemtra =  true;
             }else{
