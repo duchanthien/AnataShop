@@ -65,8 +65,12 @@ import java.util.List;
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, OnOffsetChangedListener {
 
     // 192.168.1.102
-    public static String SERVER_NAME = "http://192.168.80.1:8080/webanata/loaisanpham.php";
-    public static String SERVER = "http://192.168.80.1:8080/webanata";
+    //public static String SERVER_NAME = "http://192.168.80.1:8080/webanata/function_service.php";
+   // public static String SERVER = "http://192.168.80.1:8080/webanata";
+
+    public static String SERVER_NAME = "http://anatashop.esy.es/function_service.php";
+    public static String SERVER = "http://anatashop.esy.es";
+
 
     Toolbar toolbar;
     TabLayout mtabLayout;

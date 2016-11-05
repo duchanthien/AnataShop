@@ -43,6 +43,7 @@ import com.eshop.android.anata.Model.ObjectClass.DanhGia;
 import com.eshop.android.anata.Model.ObjectClass.SanPham;
 import com.eshop.android.anata.Presenter.ChiTietSanPham.FragmentSliderChiTietSanPham;
 import com.eshop.android.anata.Presenter.ChiTietSanPham.PresenterLogicChiTietSanPham;
+import com.eshop.android.anata.Presenter.TrangChu.XuLyMenu.PresenterLogicXuLyMenu;
 import com.eshop.android.anata.R;
 import com.eshop.android.anata.View.DangNhapDangKy.DangNhapActivity;
 import com.eshop.android.anata.View.DanhGia.DanhSachDanhGiaActivity;
@@ -53,6 +54,8 @@ import com.eshop.android.anata.View.ThanhToan.ThanhToanActivity;
 import com.eshop.android.anata.View.TimKiem.TimKiemActivity;
 import com.eshop.android.anata.View.TrangChu.TrangChuActivity;
 import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.share.internal.ShareFeedContent;
 import com.facebook.share.model.ShareContent;
@@ -64,6 +67,9 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -102,6 +108,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
     ModelDangNhap modelDangNhap;
     GoogleApiClient googleApiClient;
     GoogleSignInResult googleSignInResult;
+    PresenterLogicXuLyMenu presenterLogicXuLyMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +148,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
         presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterLogicChiTietSanPham.LayChiTietSanPham(masp);
         presenterLogicChiTietSanPham.LayDanhSachDanhGiaCuaSanPham(masp, 0);
+        presenterLogicXuLyMenu = new PresenterLogicXuLyMenu();
 
         modelDangNhap = new ModelDangNhap();
         googleApiClient = modelDangNhap.layGoogleApiClient(this, this);
@@ -273,6 +281,46 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_trangchu, menu);
+        this.menu = menu;
+
+        ItemDangnhap = menu.findItem(R.id.itDangNhap);
+        ItemDangxuat = menu.findItem(R.id.itDangXuat);
+
+        accessToken = presenterLogicXuLyMenu.LayTokenNguoiDungFacebook();
+        googleSignInResult = modelDangNhap.LayThongTinDangNhapGoogle(googleApiClient);
+
+        if (accessToken != null) {
+            GraphRequest graphRequest = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        tennguoidung = object.getString("name");
+                        ItemDangnhap.setTitle(tennguoidung);
+                        Log.d("kiemtra", tennguoidung);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "name");
+
+            graphRequest.setParameters(parameters);
+            graphRequest.executeAsync();
+        }
+        String tennv = modelDangNhap.LayCachedDangNhap(ChiTietSanPhamActivity.this);
+
+        if (!tennv.equals("")) {
+            ItemDangnhap.setTitle(tennv);
+        }
+        if (googleSignInResult != null) {
+            ItemDangnhap.setTitle(googleSignInResult.getSignInAccount().getDisplayName());
+        }
+
+        if (accessToken != null || googleSignInResult != null || !tennv.equals("")) {
+            ItemDangxuat.setVisible(true);
+        }
 
         MenuItem iGioHang = menu.findItem(R.id.itGiohang);
         View giaoDienCustomGioHang = MenuItemCompat.getActionView(iGioHang);
@@ -401,7 +449,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
         ImageView imageView;
         Bitmap bitmap;
         ByteArrayOutputStream byteArrayOutputStream;
-        byte[] hinhsanphamgiohang;
+        byte[] hinhsanphamgiohang,hinhsanphamgiohang1;
         switch (id) {
             case R.id.txtVietDanhGia:
                 Intent iThemDanhGia = new Intent(this, ThemDanhGiaActivity.class);
@@ -418,10 +466,17 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
                     fragment = fragments.get(0);
                     view = fragment.getView();
                     imageView = (ImageView) view.findViewById(R.id.imgSlider);
-                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                    if(imageView == null){
+                        bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();;
+                        byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                    }else{
+                        bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                        byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                    }
 
                     sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
                 } catch (Exception e) {
@@ -439,11 +494,17 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
                         fragment = fragments.get(0);
                         view = fragment.getView();
                         imageView = (ImageView) view.findViewById(R.id.imgSlider);
-                        bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-
-                        byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                        byte[] hinhsanphamgiohang1 = byteArrayOutputStream.toByteArray();
+                        if(imageView == null){
+                            bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();;
+                            byteArrayOutputStream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                            hinhsanphamgiohang1 = byteArrayOutputStream.toByteArray();
+                        }else{
+                            bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                            byteArrayOutputStream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                            hinhsanphamgiohang1 = byteArrayOutputStream.toByteArray();
+                        }
                         sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang1);
                     } catch (Exception ex) {
 

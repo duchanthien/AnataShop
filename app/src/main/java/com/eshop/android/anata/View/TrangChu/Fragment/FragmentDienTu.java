@@ -119,7 +119,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         int vitri3 = random.nextInt(sanPhams.size());
         Picasso.with(getContext()).load(sanPhams.get(vitri3).getHINHLON()).fit().centerInside().into(imgSanPham3);
         txtSanPham3.setText(sanPhams.get(vitri3).getTENSP()+"");
-        Log.d("kiemtra",sanPhams.get(vitri3).getTENSP());
+        //Log.d("kiemtra",sanPhams.get(vitri3).getTENSP());
 
     }
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerlayout"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +11,7 @@
         android:id="@+id/themFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -27,7 +29,7 @@
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                     <android.support.v7.widget.Toolbar
@@ -45,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginTop="?attr/actionBarSize"
+                        android:layout_marginTop="60dp"
                         android:background="@drawable/bgsearch"
                         android:orientation="horizontal"
                         app:layout_collapseMode="parallax"
@@ -64,8 +66,8 @@
                             android:text="Tìm kiếm trên Anata"
                             android:textAlignment="viewStart"
                             android:textAllCaps="false"
-                            android:textSize="12sp"
-                            android:textColor="@color/secondaryText" />
+                            android:textColor="@color/secondaryText"
+                            android:textSize="12sp" />
 
                         <View
                             android:layout_width="1dp"
@@ -84,7 +86,6 @@
                             android:src="@drawable/ic_photo_camera_black_24dp" />
                     </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
-
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
@@ -108,22 +109,25 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+                    android:layout_height="match_parent">
+
+                </android.support.v4.view.ViewPager>
 
             </FrameLayout>
 
         </android.support.design.widget.CoordinatorLayout>
 
+
+
+
     </FrameLayout>
-
-
     <ExpandableListView
         android:id="@+id/epMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        android:choiceMode="singleChoice"
+        android:choiceMode="multipleChoice"
         android:groupIndicator="@null">
 
     </ExpandableListView>
