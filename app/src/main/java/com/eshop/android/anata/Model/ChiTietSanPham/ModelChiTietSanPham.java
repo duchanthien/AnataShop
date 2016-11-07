@@ -130,7 +130,7 @@ public class ModelChiTietSanPham {
                         ChiTietSanPham chiTietSanPham = new ChiTietSanPham();
                         chiTietSanPham.setTenchitiet(tenchitiet);
                         chiTietSanPham.setGiatri(jsonObject1.getString(tenchitiet));
-                        Log.d("kiemtra",tenchitiet);
+                        //Log.d("kiemtra",tenchitiet);
                         chiTietSanPhams.add(chiTietSanPham);
                     }
 

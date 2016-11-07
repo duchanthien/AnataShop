@@ -25,9 +25,9 @@
                 android:layout_marginTop="?attr/actionBarSize"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="10dp"
                 android:paddingTop="20dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_collapseMode="parallax">
@@ -284,12 +284,13 @@
                 android:layout_marginTop="4dp"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:layout_marginBottom="40dp"
                 android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -309,9 +310,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerDanhSachDanhGia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="?attr/actionBarSize"></android.support.v7.widget.RecyclerView>
 
                 <View
                     android:layout_width="match_parent"

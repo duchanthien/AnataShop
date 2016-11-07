@@ -459,7 +459,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
             case R.id.txtXemTatCaNhanXet:
                 Intent iDanhSachDanhGia = new Intent(ChiTietSanPhamActivity.this, DanhSachDanhGiaActivity.class);
                 iDanhSachDanhGia.putExtra("masp", masp);
-                startActivity(iDanhSachDanhGia);
+                startActivityForResult(iDanhSachDanhGia,1);
                 break;
             case R.id.imgThemGioHang:
                 try {
@@ -467,18 +467,21 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
                     view = fragment.getView();
                     imageView = (ImageView) view.findViewById(R.id.imgSlider);
                     if(imageView == null){
-                        bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();;
+                        imageView.setImageResource(R.drawable.backgroundplashscreen);
+                        bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                         byteArrayOutputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                         hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                        sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
+
                     }else{
                         bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                         byteArrayOutputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                         hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
-                    }
+                        sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
 
-                    sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
+                    }
                 } catch (Exception e) {
 
                 }
@@ -655,6 +658,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
         if (onPause) {
             PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
             txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
+
         }
 
     }
@@ -668,5 +672,14 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements GoogleA
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            masp = data.getIntExtra("masp",0);
+            presenterLogicChiTietSanPham.LayChiTietSanPham(masp);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.eshop.android.anata.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,7 +60,6 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
         modelMongMuon = new ModelMongMuon();
         modelMongMuon.MoKetNetSQL(context);
     }
-
 
 
     public class ViewHolderGioHang extends RecyclerView.ViewHolder {
@@ -120,18 +121,37 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
 
 
         byte[] hinhsanpham = sanPham.getHinhgiohang();
-        Bitmap bitmapGioHang = BitmapFactory.decodeByteArray(hinhsanpham, 0, hinhsanpham.length);
-        holder.imgHinhGioHang.setImageBitmap(bitmapGioHang);
+        if (hinhsanpham != null) {
+            Bitmap bitmapGioHang = BitmapFactory.decodeByteArray(hinhsanpham, 0, hinhsanpham.length);
+            holder.imgHinhGioHang.setImageBitmap(bitmapGioHang);
+        } else {
+            holder.imgHinhGioHang.setImageResource(R.drawable.backgroundplashscreen);
+        }
+
         holder.imgXoaSanPhamGioHang.setTag(sanPham.getMASP());
         holder.imgXoaSanPhamGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 //Log.d("kiemtra",(int)v.getTag()+" ");
-                ModelGioHang modelGioHang = new ModelGioHang();
-                modelGioHang.MoKetNoiSQL(context);
-                modelGioHang.XoaSanPhamTrongGioHang((Integer) v.getTag());
-                sanPhams.remove(position);
-                notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Bạn có chắc chắn là muốn xóa");
+                builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ModelGioHang modelGioHang = new ModelGioHang();
+                        modelGioHang.MoKetNoiSQL(context);
+                        modelGioHang.XoaSanPhamTrongGioHang((Integer)v.getTag());
+                        sanPhams.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
             }
         });
 
@@ -154,7 +174,7 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
                 holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
                 Intent refresh = new Intent(context, GioHangActivity.class);
                 context.startActivity(refresh);
-                ((AppCompatActivity)context).finish();
+                ((AppCompatActivity) context).finish();
 
 
             }
@@ -172,7 +192,7 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
                 holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
                 Intent refresh = new Intent(context, GioHangActivity.class);
                 context.startActivity(refresh);
-                ((AppCompatActivity)context).finish();
+                ((AppCompatActivity) context).finish();
 
             }
         });

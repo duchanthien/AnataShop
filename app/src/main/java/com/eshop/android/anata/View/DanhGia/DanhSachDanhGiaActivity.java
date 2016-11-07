@@ -1,10 +1,12 @@
 package com.eshop.android.anata.View.DanhGia;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -41,6 +43,15 @@ public class DanhSachDanhGiaActivity extends AppCompatActivity implements ViewDa
         danhGiaList = new ArrayList<>();
         presenterLogicDanhGia = new PresenterLogicDanhGia(this);
         presenterLogicDanhGia.LayDanhSachDanhGiaSanPham(masp, 0, progressBar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("masp",masp);
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
 
     }
 

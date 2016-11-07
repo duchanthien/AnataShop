@@ -95,7 +95,7 @@ public class ModelDienTu {
                 thuongHieu.setMATH(object.getInt("MASP"));
                 thuongHieu.setTENTH(object.getString("TENSP"));
                 thuongHieu.setHINHTH(TrangChuActivity.SERVER + object.getString("HINHSANPHAM"));
-                Log.d("dd",thuongHieu.getHINHTH()+"");
+                //Log.d("dd",thuongHieu.getHINHTH()+"");
                 thuongHieuList.add(thuongHieu);
                 // Log.d("kiemtra",thuongHieu.getTENTH()+"");
             }
